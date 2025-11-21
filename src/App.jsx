@@ -506,7 +506,7 @@ const Portfolio = () => {
           <a href="mailto:vasilhsgxr5000@gmail.com" style={{color: 'white', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.2rem'}}>vasilhsgxr5000@gmail.com</a>
         </div>
         <div style={{display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '2rem'}}>
-          <a href="https://www.linkedin.com/in/vasileios-gousetis/" className="btn btn-secondary" target="_blank">LinkedIn</a>
+          <a href="https://www.linkedin.com/in/vasileiosgoysetis-7378101b9" className="btn btn-secondary" target="_blank">LinkedIn</a>
         </div>
         <p>© {new Date().getFullYear()} Vassileios Gousetis. Built with React.</p>
       </footer>
