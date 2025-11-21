@@ -300,7 +300,7 @@ const Portfolio = () => {
         </div>
         
         <h1>Vassileios Gousetis</h1>
-        <h2>SQL Server DBA & <span style={{color: '#3b82f6'}}>Infrastructure Expert</span></h2>
+        <h2>SQL Server DBA & <span style={{color: '#3b82f6'}}>Performance Expert</span></h2>
         
         <p>
           Dedicated to the core pillars of Database Administration: Security, Integrity, and Performance. I manage complex, multi-platform environments through rigorous patching, upgrades, and high-availability configurations.
