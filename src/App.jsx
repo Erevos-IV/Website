@@ -294,13 +294,9 @@ const Portfolio = () => {
 
       {/* Hero Section */}
       <section id="home" className="hero">
-        <div className="badge">
-          <Shield size={16} />
-          <span>Azure Certified Database Administrator</span>
-        </div>
         
         <h1>Vassileios Gousetis</h1>
-        <h2>SQL Server DBA & <span style={{color: '#3b82f6'}}>Performance Expert</span></h2>
+        <h2>SQL Server DBA & <span style={{color: '#3b82f6'}}>Infrastructure Expert</span></h2>
         
         <p>
           Dedicated to the core pillars of Database Administration: Security, Integrity, and Performance. I manage complex, multi-platform environments through rigorous patching, upgrades, and high-availability configurations.
@@ -314,6 +310,7 @@ const Portfolio = () => {
             <Mail size={16} /> Contact Me
           </a>
         </div>
+        
       </section>
 
       {/* Statistics */}
@@ -347,7 +344,7 @@ const Portfolio = () => {
             <ul>
               <li><span className="dot"></span>SQL Server 2016, 2019, 2022</li>
               <li><span className="dot"></span>Oracle RAC 11g, 12c, 19c</li>
-              <li><span className="dot"></span>PostgreSQL & MySQL Clusters</li>
+              <li><span className="dot"></span>High Availability & Disaster Recovery (HADR)</li>
               <li><span className="dot"></span>Install, Patching & Upgrades</li>
             </ul>
           </div>
@@ -357,9 +354,9 @@ const Portfolio = () => {
             <h3>Performance & Monitoring</h3>
             <ul>
               <li><span className="dot" style={{backgroundColor: '#10b981'}}></span>Advanced Query Tuning</li>
-              <li><span className="dot" style={{backgroundColor: '#10b981'}}></span>Solarwinds & Grafana</li>
-              <li><span className="dot" style={{backgroundColor: '#10b981'}}></span>Oracle Enterprise Manager 13c</li>
-              <li><span className="dot" style={{backgroundColor: '#10b981'}}></span>Wait Stats Analysis</li>
+              <li><span className="dot" style={{backgroundColor: '#10b981'}}></span>Deadlock & Wait Stats Analysis</li> 
+              <li><span className="dot" style={{backgroundColor: '#10b981'}}></span>Proactive Database Maintenance</li>
+              <li><span className="dot" style={{backgroundColor: '#10b981'}}></span>Solarwinds, Grafana & OBM</li>
             </ul>
           </div>
 
@@ -441,7 +438,7 @@ const Portfolio = () => {
                <li><span>▹</span> Administered and maintained databases ensuring security and reliability.</li>
                <li><span>▹</span> Monitored performance, including deep query analysis and index tuning.</li>
                <li><span>▹</span> Designed table partitioning and archiving processes.</li>
-               <li><span>▹</span> Implemented backup and recovery procedures.</li>
+               <li><span>▹</span> Implementation of backup and recovery procedures.</li>
             </ul>
           </div>
         </div>
