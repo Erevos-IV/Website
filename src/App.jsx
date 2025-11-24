@@ -295,6 +295,11 @@ const Portfolio = () => {
       {/* Hero Section */}
       <section id="home" className="hero">
         
+        <div className="badge">
+          <Shield size={16} />
+          <span>Certified Azure Database Administrator</span>
+        </div>
+
         <h1>Vassileios Gousetis</h1>
         <h2>SQL Server DBA & <span style={{color: '#3b82f6'}}>Infrastructure Expert</span></h2>
         
