@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Database, Server, Shield, Activity, Terminal, Layers, Mail, Linkedin, Github, ChevronDown, Clock, Award, GraduationCap, Cloud, ChevronLeft, ChevronRight, Download } from 'lucide-react';
+import { Database, Server, Shield, Activity, Terminal, Layers, Mail, Linkedin, Github, ChevronDown, Clock, Award, GraduationCap, Cloud, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [currentCert, setCurrentCert] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for the modal
 
   const certifications = [
     {
@@ -18,23 +19,26 @@ const Portfolio = () => {
     }
   ];
 
-  const nextCert = () => {
+  const nextCert = (e) => {
+    e && e.stopPropagation(); // Prevent modal opening when clicking button
     setCurrentCert((prev) => (prev + 1) % certifications.length);
   };
 
-  const prevCert = () => {
+  const prevCert = (e) => {
+    e && e.stopPropagation(); // Prevent modal opening when clicking button
     setCurrentCert((prev) => (prev - 1 + certifications.length) % certifications.length);
   };
 
   // --- Auto-Play Logic ---
   useEffect(() => {
-    const timer = setInterval(() => {
-      nextCert();
-    }, 5000); // Change slide every 5000ms (5 seconds)
+    if (isModalOpen) return; // Pause auto-play when modal is open
 
-    // Cleanup the timer if the component unmounts or user manually interacts
+    const timer = setInterval(() => {
+      setCurrentCert((prev) => (prev + 1) % certifications.length);
+    }, 5000); 
+
     return () => clearInterval(timer);
-  }, [currentCert]); // Re-run effect when currentCert changes to reset the timer
+  }, [currentCert, isModalOpen]);
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -44,6 +48,9 @@ const Portfolio = () => {
     }
   };
 
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   const styles = `
     /* Base Reset & Variables */
     :root {
@@ -52,7 +59,7 @@ const Portfolio = () => {
       --bg-card-hover: #334155;
       --text-main: #f1f5f9;
       --text-muted: #94a3b8;
-      --accent: #3b82f6; /* Blue */
+      --accent: #3b82f6;
       --accent-hover: #2563eb;
       --border: #334155;
     }
@@ -61,13 +68,11 @@ const Portfolio = () => {
 
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background-color: #0f172a; 
       background-color: var(--bg-dark);
       color: var(--text-main);
       line-height: 1.5;
     }
 
-    /* Layout */
     .app-container {
       min-height: 100vh;
       background-color: var(--bg-dark);
@@ -88,7 +93,6 @@ const Portfolio = () => {
       z-index: 1000;
       border-bottom: 1px solid var(--border);
     }
-
     .nav-logo { font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
     .nav-links { display: flex; gap: 2rem; }
     .nav-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
@@ -104,7 +108,6 @@ const Portfolio = () => {
       text-align: center;
       padding: 8rem 1rem 4rem;
     }
-
     .badge {
       display: inline-flex;
       align-items: center;
@@ -117,49 +120,23 @@ const Portfolio = () => {
       font-size: 0.875rem;
       margin-bottom: 1.5rem;
     }
-
     .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.1; }
     .hero h2 { font-size: 2rem; color: var(--text-muted); margin-bottom: 2rem; }
     .hero p { max-width: 650px; font-size: 1.125rem; color: var(--text-muted); margin-bottom: 2.5rem; line-height: 1.6; }
 
     .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 2rem;
-      border-radius: 0.5rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s;
-      cursor: pointer;
-      border: none;
-    }
+    .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 2rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; border: none; text-decoration: none; transition: all 0.2s; }
     .btn-primary { background-color: var(--accent); color: white; }
     .btn-secondary { background-color: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); }
 
     /* Stats Bar */
-    .stats-bar {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 2rem;
-      padding: 3rem 2rem;
-      background-color: rgba(30, 41, 59, 0.5);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      text-align: center;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+    .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; padding: 3rem 2rem; background-color: rgba(30, 41, 59, 0.5); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); text-align: center; max-width: 1200px; margin: 0 auto; }
     .stat-number { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; }
     .stat-label { font-size: 0.875rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
 
     /* Sections */
     section { padding: 6rem 1.5rem; max-width: 1200px; margin: 0 auto; }
     .section-title { font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 4rem; }
-
-    /* Grid Layouts */
     .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
 
     /* Cards */
@@ -195,14 +172,6 @@ const Portfolio = () => {
         align-items: center;
         width: 100%;
     }
-    .badge-title {
-        color: var(--text-muted);
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-    }
     .carousel-container {
         position: relative;
         width: 100%;
@@ -215,7 +184,8 @@ const Portfolio = () => {
         width: 100%;
         display: flex;
         justify-content: center;
-        padding: 0 3rem; /* Space for buttons */
+        padding: 0 3rem;
+        cursor: pointer; /* Clickable cursor */
     }
     .cert-image {
         max-width: 100%;
@@ -268,11 +238,50 @@ const Portfolio = () => {
     }
     .indicator.active { background: var(--accent); }
 
+    /* Modal (Lightbox) Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 2000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      backdrop-filter: blur(5px);
+    }
+    .modal-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90vh;
+    }
+    .modal-image {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 8px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    }
+    .modal-close {
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    .modal-close:hover { color: var(--accent); }
+
     @media (max-width: 768px) {
       .hero h1 { font-size: 2.5rem; }
       .nav-links { display: none; }
       .timeline-header { flex-direction: column; gap: 0.5rem; }
       .cert-image { max-height: 180px; }
+      .modal-close { top: -40px; right: 0; }
     }
   `;
 
@@ -320,13 +329,12 @@ const Portfolio = () => {
         
         {/* CERTIFICATION CAROUSEL */}
         <div className="badge-section">
-            <span className="badge-title">Certifications</span>
             <div className="carousel-container">
                 <button onClick={prevCert} className="carousel-btn prev-btn" aria-label="Previous Certification">
                     <ChevronLeft size={24} />
                 </button>
                 
-                <div className="carousel-slide">
+                <div className="carousel-slide" onClick={openModal}>
                     <img 
                         src={certifications[currentCert].src} 
                         alt={certifications[currentCert].alt} 
@@ -351,6 +359,22 @@ const Portfolio = () => {
         </div>
 
       </section>
+
+      {/* MODAL (LIGHTBOX) */}
+      {isModalOpen && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={closeModal}>
+              <X size={32} />
+            </button>
+            <img 
+              src={certifications[currentCert].src} 
+              alt={certifications[currentCert].alt} 
+              className="modal-image" 
+            />
+          </div>
+        </div>
+      )}
 
       {/* Statistics */}
       <div className="stats-bar">
