@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Database, Server, Shield, Activity, Terminal, Layers, Mail, Linkedin, Github, ChevronDown, Clock, Award, GraduationCap, Cloud, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { Database, Server, Shield, Activity, Terminal, Layers, Mail, Linkedin, Github, ChevronDown, Clock, Award, GraduationCap, Cloud, ChevronLeft, ChevronRight, X, Copy, Check } from 'lucide-react';
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [currentCert, setCurrentCert] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for the modal
+  const [isModalOpen, setIsModalOpen] = useState(false); // Certification Modal
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false); // Contact Modal
+  const [copied, setCopied] = useState(false);
 
   const certifications = [
     {
@@ -20,25 +22,25 @@ const Portfolio = () => {
   ];
 
   const nextCert = (e) => {
-    e && e.stopPropagation(); // Prevent modal opening when clicking button
+    e && e.stopPropagation(); 
     setCurrentCert((prev) => (prev + 1) % certifications.length);
   };
 
   const prevCert = (e) => {
-    e && e.stopPropagation(); // Prevent modal opening when clicking button
+    e && e.stopPropagation(); 
     setCurrentCert((prev) => (prev - 1 + certifications.length) % certifications.length);
   };
 
   // --- Auto-Play Logic ---
   useEffect(() => {
-    if (isModalOpen) return; // Pause auto-play when modal is open
+    if (isModalOpen || isContactModalOpen) return; 
 
     const timer = setInterval(() => {
       setCurrentCert((prev) => (prev + 1) % certifications.length);
     }, 5000); 
 
     return () => clearInterval(timer);
-  }, [currentCert, isModalOpen]);
+  }, [currentCert, isModalOpen, isContactModalOpen]);
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -50,6 +52,21 @@ const Portfolio = () => {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  
+  const openContactModal = (e) => {
+    e.preventDefault();
+    setIsContactModalOpen(true);
+  };
+  const closeContactModal = () => {
+    setIsContactModalOpen(false);
+    setCopied(false);
+  };
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("vasilhsgxr5000@gmail.com");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const styles = `
     /* Base Reset & Variables */
@@ -185,7 +202,7 @@ const Portfolio = () => {
         display: flex;
         justify-content: center;
         padding: 0 3rem;
-        cursor: pointer; /* Clickable cursor */
+        cursor: pointer; 
     }
     .cert-image {
         max-width: 100%;
@@ -276,6 +293,49 @@ const Portfolio = () => {
     }
     .modal-close:hover { color: var(--accent); }
 
+    /* Contact Modal Styles */
+    .contact-modal-content {
+        background-color: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 1rem;
+        padding: 2rem;
+        width: 100%;
+        max-width: 400px;
+        position: relative;
+        text-align: center;
+    }
+    .email-display {
+        background-color: var(--bg-dark);
+        border: 1px solid var(--border);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        font-family: monospace;
+        color: var(--text-main);
+        margin: 1.5rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+    }
+    .copy-btn {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    .copy-btn:hover { color: var(--accent); }
+    .close-contact-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+    }
+    .close-contact-btn:hover { color: white; }
+
     @media (max-width: 768px) {
       .hero h1 { font-size: 2.5rem; }
       .nav-links { display: none; }
@@ -322,9 +382,10 @@ const Portfolio = () => {
           <button onClick={() => scrollToSection('experience')} className="btn btn-primary">
             View Experience <ChevronDown size={16} />
           </button>
-          <a href="#contact" onClick={(e) => {e.preventDefault(); scrollToSection('contact');}} className="btn btn-secondary">
+          {/* Triggers the Contact Modal */}
+          <button onClick={openContactModal} className="btn btn-secondary">
             <Mail size={16} /> Contact Me
-          </a>
+          </button>
         </div>
         
         {/* CERTIFICATION CAROUSEL */}
@@ -360,7 +421,7 @@ const Portfolio = () => {
 
       </section>
 
-      {/* MODAL (LIGHTBOX) */}
+      {/* MODAL (CERTIFICATION LIGHTBOX) */}
       {isModalOpen && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -372,6 +433,36 @@ const Portfolio = () => {
               alt={certifications[currentCert].alt} 
               className="modal-image" 
             />
+          </div>
+        </div>
+      )}
+
+      {/* MODAL (CONTACT) */}
+      {isContactModalOpen && (
+        <div className="modal-overlay" onClick={closeContactModal}>
+          <div className="contact-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-contact-btn" onClick={closeContactModal}>
+              <X size={24} />
+            </button>
+            <h3 style={{fontSize: '1.5rem', marginBottom: '0.5rem'}}>Get In Touch</h3>
+            <p style={{color: 'var(--text-muted)'}}>Feel free to reach out for collaborations.</p>
+            
+            <div className="email-display">
+                <span>vasilhsgxr5000@gmail.com</span>
+                <button onClick={handleCopyEmail} className="copy-btn" title="Copy to clipboard">
+                    {copied ? <Check size={20} color="#10b981" /> : <Copy size={20} />}
+                </button>
+            </div>
+            
+            <div style={{marginTop: '2rem'}}>
+                <a 
+                    href="mailto:vasilhsgxr5000@gmail.com" 
+                    className="btn btn-primary" 
+                    style={{width: '100%', justifyContent: 'center'}}
+                >
+                    Open Mail Client
+                </a>
+            </div>
           </div>
         </div>
       )}
