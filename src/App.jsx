@@ -1,128 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Database, Server, Shield, Activity, Terminal, Layers, Mail, Linkedin, Github, ChevronDown, Clock, Award, GraduationCap, Cloud, ChevronLeft, ChevronRight, X, Download, TrendingUp, AlertTriangle } from 'lucide-react';
-
-// --- Custom Component: Typing Effect ---
-const TypingEffect = ({ text, speed = 100 }) => {
-  const [displayText, setDisplayText] = useState('');
-  
-  useEffect(() => {
-    let i = 0;
-    const timer = setInterval(() => {
-      if (i < text.length) {
-        setDisplayText((prev) => prev + text.charAt(i));
-        i++;
-      } else {
-        clearInterval(timer);
-      }
-    }, speed);
-    
-    return () => clearInterval(timer);
-  }, [text, speed]);
-
-  return <span>{displayText}<span className="cursor">|</span></span>;
-};
-
-// --- Custom Component: Animated Skill Bar ---
-const SkillBar = ({ skill, percentage }) => {
-  const [width, setWidth] = useState(0);
-  const barRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setWidth(percentage);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (barRef.current) {
-      observer.observe(barRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [percentage]);
-
-  return (
-    <div className="skill-container" ref={barRef}>
-      <div className="skill-header">
-        <span className="skill-name">{skill}</span>
-        <span className="skill-percent">{width}%</span>
-      </div>
-      <div className="skill-track">
-        <div 
-          className="skill-fill" 
-          style={{ width: `${width}%` }}
-        ></div>
-      </div>
-    </div>
-  );
-};
-
-// --- Custom Hook for Counting Numbers ---
-const useCounter = (end, duration = 2000) => {
-  const [count, setCount] = useState(0);
-  const countRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    if (countRef.current) {
-      observer.observe(countRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!isVisible) return;
-
-    let start = 0;
-    const increment = end / (duration / 16); 
-    const timer = setInterval(() => {
-      start += increment;
-      if (start >= end) {
-        setCount(end);
-        clearInterval(timer);
-      } else {
-        setCount(Math.floor(start));
-      }
-    }, 16);
-
-    return () => clearInterval(timer);
-  }, [end, duration, isVisible]);
-
-  return { count, countRef };
-};
-
-// --- Counter Component ---
-const Counter = ({ end, label, prefix = "", suffix = "" }) => {
-  const { count, countRef } = useCounter(end);
-  return (
-    <div className="stat-item" ref={countRef}>
-      <div className="stat-number">
-        {prefix}{count}{suffix}
-      </div>
-      <div className="stat-label">{label}</div>
-    </div>
-  );
-};
+import React, { useState, useEffect } from 'react';
+import { Database, Server, Shield, Activity, Terminal, Layers, Mail, Linkedin, Github, ChevronDown, Clock, Award, GraduationCap, Cloud, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [currentCert, setCurrentCert] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for the modal
 
   const certifications = [
     {
@@ -138,20 +20,23 @@ const Portfolio = () => {
   ];
 
   const nextCert = (e) => {
-    e && e.stopPropagation(); 
+    e && e.stopPropagation(); // Prevent modal opening when clicking button
     setCurrentCert((prev) => (prev + 1) % certifications.length);
   };
 
   const prevCert = (e) => {
-    e && e.stopPropagation(); 
+    e && e.stopPropagation(); // Prevent modal opening when clicking button
     setCurrentCert((prev) => (prev - 1 + certifications.length) % certifications.length);
   };
 
+  // --- Auto-Play Logic ---
   useEffect(() => {
-    if (isModalOpen) return; 
+    if (isModalOpen) return; // Pause auto-play when modal is open
+
     const timer = setInterval(() => {
       setCurrentCert((prev) => (prev + 1) % certifications.length);
     }, 5000); 
+
     return () => clearInterval(timer);
   }, [currentCert, isModalOpen]);
 
@@ -167,90 +52,105 @@ const Portfolio = () => {
   const closeModal = () => setIsModalOpen(false);
 
   const styles = `
+    /* Base Reset & Variables */
     :root {
       --bg-dark: #0f172a;
       --bg-card: #1e293b;
       --bg-card-hover: #334155;
       --text-main: #f1f5f9;
       --text-muted: #94a3b8;
-      --accent: #3b82f6; 
+      --accent: #3b82f6;
       --accent-hover: #2563eb;
       --border: #334155;
-      --success: #10b981;
-      --warning: #f59e0b;
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.5; width: 100%; overflow-x: hidden;}
-    .app-container { min-height: 100vh; background-color: var(--bg-dark); color: var(--text-main); display: flex; flex-direction: column; align-items: center; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+
+    .app-container {
+      min-height: 100vh;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+    }
 
     /* Navigation */
-    nav { position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; background-color: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); z-index: 1000; border-bottom: 1px solid var(--border); }
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border);
+    }
     .nav-logo { font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
     .nav-links { display: flex; gap: 2rem; }
     .nav-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
     .nav-btn:hover, .nav-btn.active { color: var(--accent); }
 
     /* Hero Section */
-    .hero { min-height: 100vh; justify-content: center; align-items: center; text-align: center; }
-    .badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; color: var(--accent); font-size: 0.875rem; margin-bottom: 1.5rem; }
-    
-    /* Typing Cursor Animation */
-    .cursor {
-      display: inline-block;
-      width: 2px;
-      background-color: var(--accent);
-      animation: blink 1s infinite;
-      margin-left: 2px;
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 8rem 1rem 4rem;
     }
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-    .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.1; min-height: 4rem; /* prevent layout shift */ }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 0.875rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.1; }
     .hero h2 { font-size: 2rem; color: var(--text-muted); margin-bottom: 2rem; }
-    .hero p { max-width: 650px; font-size: 1.125rem; color: var(--text-muted); margin-bottom: 2.5rem; line-height: 1.6; margin-left: auto; margin-right: auto; }
+    .hero p { max-width: 650px; font-size: 1.125rem; color: var(--text-muted); margin-bottom: 2.5rem; line-height: 1.6; }
+
     .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
     .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 2rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; border: none; text-decoration: none; transition: all 0.2s; }
     .btn-primary { background-color: var(--accent); color: white; }
     .btn-secondary { background-color: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); }
 
     /* Stats Bar */
-    .stats-bar { width: 100%; display: flex; justify-content: center; background-color: rgba(30, 41, 59, 0.5); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 3rem 0; }
-    .stats-container { width: 100%; max-width: 1200px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; text-align: center; padding: 0 1.5rem; }
+    .stats-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; padding: 3rem 2rem; background-color: rgba(30, 41, 59, 0.5); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); text-align: center; max-width: 1200px; margin: 0 auto; }
     .stat-number { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; }
     .stat-label { font-size: 0.875rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
 
     /* Sections */
-    section { width: 100%; max-width: 1200px; margin: 0 auto; padding: 6rem 1.5rem; display: flex; flex-direction: column; }
-    .section-title { font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 4rem; align-self: center; }
-    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; width: 100%; }
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; }
+    section { padding: 6rem 1.5rem; max-width: 1200px; margin: 0 auto; }
+    .section-title { font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 4rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
 
     /* Cards */
     .card { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem; padding: 2rem; transition: transform 0.2s; }
     .card:hover { transform: translateY(-5px); border-color: var(--accent); }
     .card-icon { width: 3rem; height: 3rem; background-color: rgba(59, 130, 246, 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; color: var(--accent); }
     .card h3 { font-size: 1.25rem; margin-bottom: 1rem; }
-    
-    /* Skill Bar Styles */
-    .skill-container { margin-bottom: 1.25rem; }
-    .skill-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem; font-weight: 500; }
-    .skill-percent { color: var(--accent); }
-    .skill-track { width: 100%; height: 8px; background-color: rgba(15, 23, 42, 0.6); border-radius: 4px; overflow: hidden; }
-    .skill-fill { height: 100%; background-color: var(--accent); border-radius: 4px; transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    .card ul { list-style: none; color: var(--text-muted); }
+    .card li { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.95rem; }
+    .dot { width: 6px; height: 6px; background-color: var(--accent); border-radius: 50%; }
 
     /* Timeline */
-    .timeline { position: relative; padding-left: 2rem; }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 7px;
-      top: 0;
-      width: 2px;
-      height: 100%;
-      background-color: var(--border);
-    }
-    
-    .timeline-item { padding-left: 2rem; position: relative; margin-bottom: 3rem; }
-    .timeline-dot { width: 1rem; height: 1rem; background-color: var(--accent); border-radius: 50%; position: absolute; left: -9px; top: 0; border: 4px solid var(--bg-dark); z-index: 2; }
+    .timeline-item { border-left: 2px solid var(--border); padding-left: 2rem; position: relative; margin-bottom: 3rem; }
+    .timeline-dot { width: 1rem; height: 1rem; background-color: var(--accent); border-radius: 50%; position: absolute; left: -9px; top: 0; border: 4px solid var(--bg-dark); }
     .timeline-header { display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 0.5rem; }
     .timeline-date { color: var(--accent); display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 500; }
     .timeline-company { font-size: 1.125rem; color: var(--text-muted); margin-bottom: 1rem; }
@@ -262,28 +162,118 @@ const Portfolio = () => {
     .tech-chip:hover { border-color: var(--accent); color: var(--accent); }
 
     /* Footer */
-    footer { width: 100%; text-align: center; padding: 3rem; background-color: #020617; color: var(--text-muted); font-size: 0.9rem; }
+    footer { text-align: center; padding: 3rem; background-color: #020617; color: var(--text-muted); font-size: 0.9rem; }
 
-    /* Carousel */
-    .badge-section { margin-top: 4rem; display: flex; flex-direction: column; align-items: center; width: 100%; }
-    .badge-title { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 1.5rem; }
-    .carousel-container { position: relative; width: 100%; max-width: 600px; display: flex; align-items: center; justify-content: center; }
-    .carousel-slide { width: 100%; display: flex; justify-content: center; padding: 0 3rem; cursor: pointer; }
-    .cert-image { max-width: 100%; height: auto; max-height: 250px; border-radius: 8px; filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3)); transition: transform 0.3s ease; }
-    .cert-image:hover { transform: scale(1.02); }
-    .carousel-btn { background: rgba(30, 41, 59, 0.5); border: 1px solid var(--border); color: var(--text-muted); padding: 0.5rem; border-radius: 50%; cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
-    .carousel-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+    /* Carousel Styles */
+    .badge-section {
+        margin-top: 4rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .carousel-container {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .carousel-slide {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 0 3rem;
+        cursor: pointer; /* Clickable cursor */
+    }
+    .cert-image {
+        max-width: 100%;
+        height: auto;
+        max-height: 250px;
+        border-radius: 8px;
+        filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
+        transition: transform 0.3s ease;
+    }
+    .cert-image:hover {
+        transform: scale(1.02);
+    }
+    .carousel-btn {
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        padding: 0.5rem;
+        border-radius: 50%;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .carousel-btn:hover { 
+        background: var(--accent); 
+        color: white;
+        border-color: var(--accent);
+    }
     .prev-btn { left: 0; }
     .next-btn { right: 0; }
-    .carousel-indicators { display: flex; gap: 0.5rem; justify-content: center; margin-top: 1.5rem; }
-    .indicator { width: 8px; height: 8px; border-radius: 50%; background: var(--bg-card-hover); cursor: pointer; transition: background 0.3s; }
+    
+    .carousel-indicators {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        margin-top: 1.5rem;
+    }
+    .indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--bg-card-hover);
+        cursor: pointer;
+        transition: background 0.3s;
+    }
     .indicator.active { background: var(--accent); }
 
-    /* Modal */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); z-index: 2000; display: flex; justify-content: center; align-items: center; padding: 2rem; backdrop-filter: blur(5px); }
-    .modal-content { position: relative; max-width: 90%; max-height: 90vh; }
-    .modal-image { max-width: 100%; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
-    .modal-close { position: absolute; top: -40px; right: -40px; background: none; border: none; color: white; cursor: pointer; padding: 0.5rem; }
+    /* Modal (Lightbox) Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      z-index: 2000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      backdrop-filter: blur(5px);
+    }
+    .modal-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90vh;
+    }
+    .modal-image {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 8px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    }
+    .modal-close {
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
     .modal-close:hover { color: var(--accent); }
 
     @media (max-width: 768px) {
@@ -292,7 +282,6 @@ const Portfolio = () => {
       .timeline-header { flex-direction: column; gap: 0.5rem; }
       .cert-image { max-height: 180px; }
       .modal-close { top: -40px; right: 0; }
-      .grid-2 { grid-template-columns: 1fr; }
     }
   `;
 
@@ -322,9 +311,7 @@ const Portfolio = () => {
           <span>Certified Azure Database Administrator</span>
         </div>
 
-        {/* TYPING EFFECT ANIMATION */}
-        <h1><TypingEffect text="Vassileios Gousetis" speed={100} /></h1>
-        
+        <h1>Vassileios Gousetis</h1>
         <h2>SQL Server DBA & <span style={{color: '#3b82f6'}}>Performance Expert</span></h2>
         
         <p>
@@ -335,9 +322,8 @@ const Portfolio = () => {
           <button onClick={() => scrollToSection('experience')} className="btn btn-primary">
             View Experience <ChevronDown size={16} />
           </button>
-          {/* Note: Ensure Vassileios_Gousetis_CV.pdf is in public folder or remove href */}
-          <a href="/Vassileios_Gousetis_CV.pdf" download className="btn btn-secondary">
-            <Download size={16} /> Download CV
+          <a href="#contact" onClick={(e) => {e.preventDefault(); scrollToSection('contact');}} className="btn btn-secondary">
+            <Mail size={16} /> Contact Me
           </a>
         </div>
         
@@ -392,21 +378,25 @@ const Portfolio = () => {
 
       {/* Statistics */}
       <div className="stats-bar">
-        <div className="stats-container">
-          <div className="stat-item">
-            <div className="stat-number">2016-2025</div>
-            <div className="stat-label">Server Versions</div>
-          </div>
-          <div className="stat-item">
-            <div className="stat-number">Cloud</div>
-            <div className="stat-label">Azure & GCP</div>
-          </div>
-          <Counter end={650} label="DBs Administered" suffix="+" />
-          <Counter end={40} label="Data Managed (TB)" suffix="+" />
+        <div className="stat-item">
+          <div className="stat-number">SQL</div>
+          <div className="stat-label">Server 2016-2025</div>
+        </div>
+        <div className="stat-item">
+          <div className="stat-number">Cloud</div>
+          <div className="stat-label">Azure & GCP</div>
+        </div>
+        <div className="stat-item">
+          <div className="stat-number" style={{color: '#3b82f6'}}>650+</div>
+          <div className="stat-label">DBs Administered</div>
+        </div>
+        <div className="stat-item">
+          <div className="stat-number" style={{color: '#3b82f6'}}>40TB+</div>
+          <div className="stat-label">Data Managed</div>
         </div>
       </div>
 
-      {/* Core Expertise with Animated Skill Bars */}
+      {/* Core Expertise */}
       <section id="expertise">
         <h2 className="section-title">Technical Expertise</h2>
         
@@ -414,35 +404,34 @@ const Portfolio = () => {
           <div className="card">
             <div className="card-icon"><Database /></div>
             <h3>Database Administration</h3>
-            {/* Replaced Bullets with Skill Bars */}
-            <div style={{marginTop: '1.5rem'}}>
-                <SkillBar skill="SQL Server (2016-2022)" percentage={95} />
-                <SkillBar skill="Oracle RAC & Data Guard" percentage={85} />
-                <SkillBar skill="HADR (Availability Groups)" percentage={90} />
-                <SkillBar skill="Patching & Upgrades" percentage={95} />
-            </div>
+            <ul>
+              <li><span className="dot"></span>SQL Server 2016, 2019, 2022</li>
+              <li><span className="dot"></span>Oracle RAC 11g, 12c, 19c</li>
+              <li><span className="dot"></span>High Availability & Disaster Recovery (HADR)</li>
+              <li><span className="dot"></span>Install, Patching & Upgrades</li>
+            </ul>
           </div>
 
           <div className="card">
             <div className="card-icon" style={{color: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.1)'}}><Activity /></div>
             <h3>Performance & Monitoring</h3>
-            <div style={{marginTop: '1.5rem'}}>
-                <SkillBar skill="Advanced Query Tuning" percentage={92} />
-                <SkillBar skill="Deadlock Analysis" percentage={88} />
-                <SkillBar skill="Proactive Maintenance" percentage={95} />
-                <SkillBar skill="Monitoring (Solarwinds/Grafana)" percentage={90} />
-            </div>
+            <ul>
+              <li><span className="dot" style={{backgroundColor: '#10b981'}}></span>Advanced Query Tuning</li>
+              <li><span className="dot" style={{backgroundColor: '#10b981'}}></span>Deadlock & Wait Stats Analysis</li> 
+              <li><span className="dot" style={{backgroundColor: '#10b981'}}></span>Proactive Database Maintenance</li>
+              <li><span className="dot" style={{backgroundColor: '#10b981'}}></span>Solarwinds, Grafana & OBM</li>
+            </ul>
           </div>
 
           <div className="card">
             <div className="card-icon" style={{color: '#a855f7', backgroundColor: 'rgba(168, 85, 247, 0.1)'}}><Cloud /></div>
             <h3>Cloud & Automation</h3>
-            <div style={{marginTop: '1.5rem'}}>
-                <SkillBar skill="Azure Database Services" percentage={85} />
-                <SkillBar skill="Cloud Migrations" percentage={80} />
-                <SkillBar skill="Ansible Automation" percentage={75} />
-                <SkillBar skill="Powershell Scripting" percentage={85} />
-            </div>
+            <ul>
+              <li><span className="dot" style={{backgroundColor: '#a855f7'}}></span>Azure Database Services</li>
+              <li><span className="dot" style={{backgroundColor: '#a855f7'}}></span>Database Migration to Cloud</li>
+              <li><span className="dot" style={{backgroundColor: '#a855f7'}}></span>Ansible & Powershell</li>
+              <li><span className="dot" style={{backgroundColor: '#a855f7'}}></span>Google Cloud Platform</li>
+            </ul>
           </div>
         </div>
       </section>
