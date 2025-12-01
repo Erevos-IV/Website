@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Database, Server, Shield, Activity, Terminal, Layers, Mail, Linkedin, Github, ChevronDown, Clock, Award, GraduationCap, Cloud, ChevronLeft, ChevronRight, Download } from 'lucide-react';
 
 const Portfolio = () => {
@@ -25,6 +25,16 @@ const Portfolio = () => {
   const prevCert = () => {
     setCurrentCert((prev) => (prev - 1 + certifications.length) % certifications.length);
   };
+
+  // --- Auto-Play Logic ---
+  useEffect(() => {
+    const timer = setInterval(() => {
+      nextCert();
+    }, 5000); // Change slide every 5000ms (5 seconds)
+
+    // Cleanup the timer if the component unmounts or user manually interacts
+    return () => clearInterval(timer);
+  }, [currentCert]); // Re-run effect when currentCert changes to reset the timer
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
