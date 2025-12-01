@@ -1,8 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { Database, Server, Shield, Activity, Terminal, Layers, Mail, Linkedin, Github, ChevronDown, Clock, Award, GraduationCap, Cloud } from 'lucide-react';
+import React, { useState } from 'react';
+import { Database, Server, Shield, Activity, Terminal, Layers, Mail, Linkedin, Github, ChevronDown, Clock, Award, GraduationCap, Cloud, ChevronLeft, ChevronRight, Download } from 'lucide-react';
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
+  const [currentCert, setCurrentCert] = useState(0);
+
+  const certifications = [
+    {
+      id: 1,
+      src: "/cert-azure-dba.png", 
+      alt: "Microsoft Certified: Azure Database Administrator Associate"
+    },
+    {
+      id: 2,
+      src: "/cert-azure-data.png", 
+      alt: "Microsoft Certified: Azure Data Fundamentals"
+    }
+  ];
+
+  const nextCert = () => {
+    setCurrentCert((prev) => (prev + 1) % certifications.length);
+  };
+
+  const prevCert = () => {
+    setCurrentCert((prev) => (prev - 1 + certifications.length) % certifications.length);
+  };
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -29,7 +51,7 @@ const Portfolio = () => {
 
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background-color: #0f172a; /* Fallback for var */
+      background-color: #0f172a; 
       background-color: var(--bg-dark);
       color: var(--text-main);
       line-height: 1.5;
@@ -57,29 +79,9 @@ const Portfolio = () => {
       border-bottom: 1px solid var(--border);
     }
 
-    .nav-logo {
-      font-size: 1.25rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-    }
-
-    .nav-btn {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-
+    .nav-logo { font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
     .nav-btn:hover, .nav-btn.active { color: var(--accent); }
 
     /* Hero Section */
@@ -106,26 +108,9 @@ const Portfolio = () => {
       margin-bottom: 1.5rem;
     }
 
-    .hero h1 {
-      font-size: 3.5rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-      line-height: 1.1;
-    }
-
-    .hero h2 {
-      font-size: 2rem;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-    }
-
-    .hero p {
-      max-width: 650px;
-      font-size: 1.125rem;
-      color: var(--text-muted);
-      margin-bottom: 2.5rem;
-      line-height: 1.6;
-    }
+    .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.1; }
+    .hero h2 { font-size: 2rem; color: var(--text-muted); margin-bottom: 2rem; }
+    .hero p { max-width: 650px; font-size: 1.125rem; color: var(--text-muted); margin-bottom: 2.5rem; line-height: 1.6; }
 
     .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
 
@@ -141,19 +126,8 @@ const Portfolio = () => {
       cursor: pointer;
       border: none;
     }
-
-    .btn-primary {
-      background-color: var(--accent);
-      color: white;
-    }
-    .btn-primary:hover { background-color: var(--accent-hover); }
-
-    .btn-secondary {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border);
-      color: var(--text-main);
-    }
-    .btn-secondary:hover { background-color: var(--bg-card-hover); }
+    .btn-primary { background-color: var(--accent); color: white; }
+    .btn-secondary { background-color: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); }
 
     /* Stats Bar */
     .stats-bar {
@@ -168,109 +142,127 @@ const Portfolio = () => {
       max-width: 1200px;
       margin: 0 auto;
     }
-
     .stat-number { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; }
     .stat-label { font-size: 0.875rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
 
     /* Sections */
     section { padding: 6rem 1.5rem; max-width: 1200px; margin: 0 auto; }
-
-    .section-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 4rem;
-    }
+    .section-title { font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 4rem; }
 
     /* Grid Layouts */
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
 
     /* Cards */
-    .card {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 2rem;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      border-color: var(--accent);
-    }
-
-    .card-icon {
-      width: 3rem;
-      height: 3rem;
-      background-color: rgba(59, 130, 246, 0.1);
-      border-radius: 0.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-      color: var(--accent);
-    }
-
+    .card { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem; padding: 2rem; transition: transform 0.2s; }
+    .card:hover { transform: translateY(-5px); border-color: var(--accent); }
+    .card-icon { width: 3rem; height: 3rem; background-color: rgba(59, 130, 246, 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; color: var(--accent); }
     .card h3 { font-size: 1.25rem; margin-bottom: 1rem; }
     .card ul { list-style: none; color: var(--text-muted); }
     .card li { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.95rem; }
     .dot { width: 6px; height: 6px; background-color: var(--accent); border-radius: 50%; }
 
-    /* Experience Timeline */
-    .timeline-item {
-      border-left: 2px solid var(--border);
-      padding-left: 2rem;
-      position: relative;
-      margin-bottom: 3rem;
-    }
-
-    .timeline-dot {
-      width: 1rem;
-      height: 1rem;
-      background-color: var(--accent);
-      border-radius: 50%;
-      position: absolute;
-      left: -9px;
-      top: 0;
-      border: 4px solid var(--bg-dark);
-    }
-
+    /* Timeline */
+    .timeline-item { border-left: 2px solid var(--border); padding-left: 2rem; position: relative; margin-bottom: 3rem; }
+    .timeline-dot { width: 1rem; height: 1rem; background-color: var(--accent); border-radius: 50%; position: absolute; left: -9px; top: 0; border: 4px solid var(--bg-dark); }
     .timeline-header { display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 0.5rem; }
-    .timeline-header h3 { font-size: 1.5rem; }
     .timeline-date { color: var(--accent); display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 500; }
     .timeline-company { font-size: 1.125rem; color: var(--text-muted); margin-bottom: 1rem; }
     .timeline-list li { margin-bottom: 0.5rem; display: flex; gap: 0.5rem; }
 
     /* Tech Chips */
     .tech-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; }
-    .tech-chip {
-      padding: 0.75rem 1.5rem;
-      background-color: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 2rem;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      transition: all 0.2s;
-    }
+    .tech-chip { padding: 0.75rem 1.5rem; background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 2rem; color: var(--text-muted); font-size: 0.9rem; transition: all 0.2s; }
     .tech-chip:hover { border-color: var(--accent); color: var(--accent); }
 
     /* Footer */
-    footer {
-      text-align: center;
-      padding: 3rem;
-      background-color: #020617;
-      color: var(--text-muted);
-      font-size: 0.9rem;
+    footer { text-align: center; padding: 3rem; background-color: #020617; color: var(--text-muted); font-size: 0.9rem; }
+
+    /* Carousel Styles */
+    .badge-section {
+        margin-top: 4rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
     }
+    .badge-title {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+    .carousel-container {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .carousel-slide {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 0 3rem; /* Space for buttons */
+    }
+    .cert-image {
+        max-width: 100%;
+        height: auto;
+        max-height: 250px;
+        border-radius: 8px;
+        filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
+        transition: transform 0.3s ease;
+    }
+    .cert-image:hover {
+        transform: scale(1.02);
+    }
+    .carousel-btn {
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        padding: 0.5rem;
+        border-radius: 50%;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .carousel-btn:hover { 
+        background: var(--accent); 
+        color: white;
+        border-color: var(--accent);
+    }
+    .prev-btn { left: 0; }
+    .next-btn { right: 0; }
+    
+    .carousel-indicators {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        margin-top: 1.5rem;
+    }
+    .indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--bg-card-hover);
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    .indicator.active { background: var(--accent); }
 
     @media (max-width: 768px) {
       .hero h1 { font-size: 2.5rem; }
-      .nav-links { display: none; } /* Hide nav links on mobile */
+      .nav-links { display: none; }
       .timeline-header { flex-direction: column; gap: 0.5rem; }
+      .cert-image { max-height: 180px; }
     }
   `;
 
@@ -311,11 +303,43 @@ const Portfolio = () => {
           <button onClick={() => scrollToSection('experience')} className="btn btn-primary">
             View Experience <ChevronDown size={16} />
           </button>
-          <a href="mailto:vasilhsgxr5000@gmail.com" className="btn btn-secondary">
+          <a href="#contact" onClick={(e) => {e.preventDefault(); scrollToSection('contact');}} className="btn btn-secondary">
             <Mail size={16} /> Contact Me
           </a>
         </div>
         
+        {/* CERTIFICATION CAROUSEL */}
+        <div className="badge-section">
+            <span className="badge-title">Certifications</span>
+            <div className="carousel-container">
+                <button onClick={prevCert} className="carousel-btn prev-btn" aria-label="Previous Certification">
+                    <ChevronLeft size={24} />
+                </button>
+                
+                <div className="carousel-slide">
+                    <img 
+                        src={certifications[currentCert].src} 
+                        alt={certifications[currentCert].alt} 
+                        className="cert-image" 
+                    />
+                </div>
+
+                <button onClick={nextCert} className="carousel-btn next-btn" aria-label="Next Certification">
+                    <ChevronRight size={24} />
+                </button>
+            </div>
+            
+            <div className="carousel-indicators">
+                {certifications.map((_, idx) => (
+                    <div 
+                        key={idx} 
+                        className={`indicator ${idx === currentCert ? 'active' : ''}`}
+                        onClick={() => setCurrentCert(idx)}
+                    />
+                ))}
+            </div>
+        </div>
+
       </section>
 
       {/* Statistics */}
