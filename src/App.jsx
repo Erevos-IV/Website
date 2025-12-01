@@ -1,6 +1,66 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Database, Server, Shield, Activity, Terminal, Layers, Mail, Linkedin, Github, ChevronDown, Clock, Award, GraduationCap, Cloud, ChevronLeft, ChevronRight, X, Download, TrendingUp, AlertTriangle } from 'lucide-react';
 
+// --- Custom Component: Typing Effect ---
+const TypingEffect = ({ text, speed = 100 }) => {
+  const [displayText, setDisplayText] = useState('');
+  
+  useEffect(() => {
+    let i = 0;
+    const timer = setInterval(() => {
+      if (i < text.length) {
+        setDisplayText((prev) => prev + text.charAt(i));
+        i++;
+      } else {
+        clearInterval(timer);
+      }
+    }, speed);
+    
+    return () => clearInterval(timer);
+  }, [text, speed]);
+
+  return <span>{displayText}<span className="cursor">|</span></span>;
+};
+
+// --- Custom Component: Animated Skill Bar ---
+const SkillBar = ({ skill, percentage }) => {
+  const [width, setWidth] = useState(0);
+  const barRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setWidth(percentage);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (barRef.current) {
+      observer.observe(barRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [percentage]);
+
+  return (
+    <div className="skill-container" ref={barRef}>
+      <div className="skill-header">
+        <span className="skill-name">{skill}</span>
+        <span className="skill-percent">{width}%</span>
+      </div>
+      <div className="skill-track">
+        <div 
+          className="skill-fill" 
+          style={{ width: `${width}%` }}
+        ></div>
+      </div>
+    </div>
+  );
+};
+
 // --- Custom Hook for Counting Numbers ---
 const useCounter = (end, duration = 2000) => {
   const [count, setCount] = useState(0);
@@ -29,7 +89,7 @@ const useCounter = (end, duration = 2000) => {
     if (!isVisible) return;
 
     let start = 0;
-    const increment = end / (duration / 16); // 60fps
+    const increment = end / (duration / 16); 
     const timer = setInterval(() => {
       start += increment;
       if (start >= end) {
@@ -59,7 +119,6 @@ const Counter = ({ end, label, prefix = "", suffix = "" }) => {
   );
 };
 
-// --- Main Portfolio Component ---
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [currentCert, setCurrentCert] = useState(0);
@@ -124,23 +183,6 @@ const Portfolio = () => {
     body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.5; width: 100%; overflow-x: hidden;}
     .app-container { min-height: 100vh; background-color: var(--bg-dark); color: var(--text-main); display: flex; flex-direction: column; align-items: center; }
 
-    /* --- ANIMATIONS --- */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    @keyframes drawLine {
-      from { height: 0; }
-      to { height: 100%; }
-    }
-
-    .animate-hero-1 { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
-    .animate-hero-2 { animation: fadeInUp 0.8s ease-out 0.2s forwards; opacity: 0; }
-    .animate-hero-3 { animation: fadeInUp 0.8s ease-out 0.4s forwards; opacity: 0; }
-    .animate-hero-4 { animation: fadeInUp 0.8s ease-out 0.6s forwards; opacity: 0; }
-    .animate-hero-5 { animation: fadeInUp 0.8s ease-out 0.8s forwards; opacity: 0; }
-
     /* Navigation */
     nav { position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; background-color: rgba(15, 23, 42, 0.95); backdrop-filter: blur(8px); z-index: 1000; border-bottom: 1px solid var(--border); }
     .nav-logo { font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
@@ -151,7 +193,18 @@ const Portfolio = () => {
     /* Hero Section */
     .hero { min-height: 100vh; justify-content: center; align-items: center; text-align: center; }
     .badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; color: var(--accent); font-size: 0.875rem; margin-bottom: 1.5rem; }
-    .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.1; }
+    
+    /* Typing Cursor Animation */
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      background-color: var(--accent);
+      animation: blink 1s infinite;
+      margin-left: 2px;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.1; min-height: 4rem; /* prevent layout shift */ }
     .hero h2 { font-size: 2rem; color: var(--text-muted); margin-bottom: 2rem; }
     .hero p { max-width: 650px; font-size: 1.125rem; color: var(--text-muted); margin-bottom: 2.5rem; line-height: 1.6; margin-left: auto; margin-right: auto; }
     .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
@@ -176,19 +229,15 @@ const Portfolio = () => {
     .card:hover { transform: translateY(-5px); border-color: var(--accent); }
     .card-icon { width: 3rem; height: 3rem; background-color: rgba(59, 130, 246, 0.1); border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; color: var(--accent); }
     .card h3 { font-size: 1.25rem; margin-bottom: 1rem; }
-    .card ul { list-style: none; color: var(--text-muted); }
-    .card li { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.95rem; }
-    .dot { width: 6px; height: 6px; background-color: var(--accent); border-radius: 50%; }
+    
+    /* Skill Bar Styles */
+    .skill-container { margin-bottom: 1.25rem; }
+    .skill-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem; font-weight: 500; }
+    .skill-percent { color: var(--accent); }
+    .skill-track { width: 100%; height: 8px; background-color: rgba(15, 23, 42, 0.6); border-radius: 4px; overflow: hidden; }
+    .skill-fill { height: 100%; background-color: var(--accent); border-radius: 4px; transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
 
-    /* Case Study Cards */
-    .case-study-card { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem; padding: 2rem; transition: transform 0.2s; }
-    .case-study-card:hover { transform: translateY(-3px); border-color: var(--success); }
-    .case-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; color: var(--success); font-weight: 600; }
-    .case-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; color: white; }
-    .case-metric { display: inline-block; padding: 0.25rem 0.75rem; background-color: rgba(16, 185, 129, 0.1); color: var(--success); border-radius: 4px; font-weight: 600; font-size: 0.9rem; margin-bottom: 1rem; }
-    .case-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
-
-    /* Timeline (Animated) */
+    /* Timeline */
     .timeline { position: relative; padding-left: 2rem; }
     .timeline::before {
       content: '';
@@ -198,16 +247,9 @@ const Portfolio = () => {
       width: 2px;
       height: 100%;
       background-color: var(--border);
-      animation: drawLine 1.5s ease-out forwards; 
-      transform-origin: top;
     }
     
-    .timeline-item { padding-left: 2rem; position: relative; margin-bottom: 3rem; opacity: 0; animation: fadeInUp 0.5s ease-out forwards; }
-    .timeline-item:nth-child(1) { animation-delay: 0.2s; }
-    .timeline-item:nth-child(2) { animation-delay: 0.4s; }
-    .timeline-item:nth-child(3) { animation-delay: 0.6s; }
-    .timeline-item:nth-child(4) { animation-delay: 0.8s; }
-
+    .timeline-item { padding-left: 2rem; position: relative; margin-bottom: 3rem; }
     .timeline-dot { width: 1rem; height: 1rem; background-color: var(--accent); border-radius: 50%; position: absolute; left: -9px; top: 0; border: 4px solid var(--bg-dark); z-index: 2; }
     .timeline-header { display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 0.5rem; }
     .timeline-date { color: var(--accent); display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 500; }
@@ -275,29 +317,32 @@ const Portfolio = () => {
       {/* Hero Section */}
       <section id="home" className="hero">
         
-        <div className="badge animate-hero-1">
+        <div className="badge">
           <Shield size={16} />
           <span>Certified Azure Database Administrator</span>
         </div>
 
-        <h1 className="animate-hero-2">Vassileios Gousetis</h1>
-        <h2 className="animate-hero-3">SQL Server DBA & <span style={{color: '#3b82f6'}}>Performance Expert</span></h2>
+        {/* TYPING EFFECT ANIMATION */}
+        <h1><TypingEffect text="Vassileios Gousetis" speed={100} /></h1>
         
-        <p className="animate-hero-4">
+        <h2>SQL Server DBA & <span style={{color: '#3b82f6'}}>Performance Expert</span></h2>
+        
+        <p>
           Dedicated to the core pillars of Database Administration: Security, Integrity, and Performance. I manage complex, multi-platform environments through rigorous patching, upgrades, and high-availability configurations.
         </p>
         
-        <div className="btn-group animate-hero-5">
+        <div className="btn-group">
           <button onClick={() => scrollToSection('experience')} className="btn btn-primary">
             View Experience <ChevronDown size={16} />
           </button>
+          {/* Note: Ensure Vassileios_Gousetis_CV.pdf is in public folder or remove href */}
           <a href="/Vassileios_Gousetis_CV.pdf" download className="btn btn-secondary">
             <Download size={16} /> Download CV
           </a>
         </div>
         
         {/* CERTIFICATION CAROUSEL */}
-        <div className="badge-section animate-hero-5">
+        <div className="badge-section">
             <div className="carousel-container">
                 <button onClick={prevCert} className="carousel-btn prev-btn" aria-label="Previous Certification">
                     <ChevronLeft size={24} />
@@ -345,7 +390,7 @@ const Portfolio = () => {
         </div>
       )}
 
-      {/* Statistics (Animated Counters) */}
+      {/* Statistics */}
       <div className="stats-bar">
         <div className="stats-container">
           <div className="stat-item">
@@ -361,7 +406,7 @@ const Portfolio = () => {
         </div>
       </div>
 
-      {/* Core Expertise */}
+      {/* Core Expertise with Animated Skill Bars */}
       <section id="expertise">
         <h2 className="section-title">Technical Expertise</h2>
         
@@ -369,34 +414,35 @@ const Portfolio = () => {
           <div className="card">
             <div className="card-icon"><Database /></div>
             <h3>Database Administration</h3>
-            <ul>
-              <li><span className="dot"></span>SQL Server 2016, 2019, 2022</li>
-              <li><span className="dot"></span>Oracle RAC 11g, 12c, 19c</li>
-              <li><span className="dot"></span>High Availability & Disaster Recovery (HADR)</li>
-              <li><span className="dot"></span>Install, Patching & Upgrades</li>
-            </ul>
+            {/* Replaced Bullets with Skill Bars */}
+            <div style={{marginTop: '1.5rem'}}>
+                <SkillBar skill="SQL Server (2016-2022)" percentage={95} />
+                <SkillBar skill="Oracle RAC & Data Guard" percentage={85} />
+                <SkillBar skill="HADR (Availability Groups)" percentage={90} />
+                <SkillBar skill="Patching & Upgrades" percentage={95} />
+            </div>
           </div>
 
           <div className="card">
             <div className="card-icon" style={{color: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.1)'}}><Activity /></div>
             <h3>Performance & Monitoring</h3>
-            <ul>
-              <li><span className="dot" style={{backgroundColor: '#10b981'}}></span>Advanced Query Tuning</li>
-              <li><span className="dot" style={{backgroundColor: '#10b981'}}></span>Deadlock & Wait Stats Analysis</li> 
-              <li><span className="dot" style={{backgroundColor: '#10b981'}}></span>Proactive Database Maintenance</li>
-              <li><span className="dot" style={{backgroundColor: '#10b981'}}></span>Solarwinds, Grafana & OBM</li>
-            </ul>
+            <div style={{marginTop: '1.5rem'}}>
+                <SkillBar skill="Advanced Query Tuning" percentage={92} />
+                <SkillBar skill="Deadlock Analysis" percentage={88} />
+                <SkillBar skill="Proactive Maintenance" percentage={95} />
+                <SkillBar skill="Monitoring (Solarwinds/Grafana)" percentage={90} />
+            </div>
           </div>
 
           <div className="card">
             <div className="card-icon" style={{color: '#a855f7', backgroundColor: 'rgba(168, 85, 247, 0.1)'}}><Cloud /></div>
             <h3>Cloud & Automation</h3>
-            <ul>
-              <li><span className="dot" style={{backgroundColor: '#a855f7'}}></span>Azure Database Services</li>
-              <li><span className="dot" style={{backgroundColor: '#a855f7'}}></span>Database Migration to Cloud</li>
-              <li><span className="dot" style={{backgroundColor: '#a855f7'}}></span>Ansible & Powershell</li>
-              <li><span className="dot" style={{backgroundColor: '#a855f7'}}></span>Google Cloud Platform</li>
-            </ul>
+            <div style={{marginTop: '1.5rem'}}>
+                <SkillBar skill="Azure Database Services" percentage={85} />
+                <SkillBar skill="Cloud Migrations" percentage={80} />
+                <SkillBar skill="Ansible Automation" percentage={75} />
+                <SkillBar skill="Powershell Scripting" percentage={85} />
+            </div>
           </div>
         </div>
       </section>
