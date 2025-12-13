@@ -18,6 +18,11 @@ const Portfolio = () => {
       id: 2,
       src: "/cert-azure-data.png", 
       alt: "Microsoft Certified: Azure Data Fundamentals"
+    },
+    {
+      id: 3,
+      src: "/cert-oracle-oci-Foundations.png",
+      alt: "Oracle Certified Associate"
     }
   ];
 
