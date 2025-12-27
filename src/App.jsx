@@ -501,7 +501,7 @@ const Portfolio = () => {
             <div className="card-icon"><Database /></div>
             <h3>Database Administration</h3>
             <ul>
-              <li><span className="dot"></span>SQL Server 2016, 2019, 2022</li>
+              <li><span className="dot"></span>SQL Server 2016, 2019, 2022, 2025</li>
               <li><span className="dot"></span>Oracle RAC 11g, 12c, 19c</li>
               <li><span className="dot"></span>High Availability & Disaster Recovery (HADR)</li>
               <li><span className="dot"></span>Install, Patching & Upgrades</li>
