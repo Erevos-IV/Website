@@ -21,7 +21,7 @@ const Portfolio = () => {
     },
     {
       id: 3,
-      src: "/cert-oracle-associate.png", 
+      src: "/cert-oracle-oci-Foundations.png", 
       alt: "Oracle Certified Associate"
     }
   ];
