@@ -21,8 +21,8 @@ const Portfolio = () => {
     },
     {
       id: 3,
-      src: "/cert-oracle-associate.png", // Make sure to add this image to your public folder!
-      alt: "Oracle Certified Associate" // Update with your exact certification title
+      src: "/cert-oracle-associate.png",
+      alt: "Oracle Certified Associate" 
     }
   ];
 
