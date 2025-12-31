@@ -21,8 +21,8 @@ const Portfolio = () => {
     },
     {
       id: 3,
-      src: "/cert-oracle-oci-Foundations.png", 
-      alt: "Oracle Certified Associate"
+      src: "/cert-oracle-associate.png", // Make sure to add this image to your public folder!
+      alt: "Oracle Certified Associate" // Update with your exact certification title
     }
   ];
 
@@ -144,14 +144,11 @@ const Portfolio = () => {
       font-size: 0.875rem;
       margin-bottom: 1.5rem;
     }
-    .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.1; }
-    .hero h2 { font-size: 2rem; color: var(--text-muted); margin-bottom: 2rem; }
-    .hero p { max-width: 650px; font-size: 1.125rem; color: var(--text-muted); margin-bottom: 2.5rem; line-height: 1.6; }
-
+    
     /* New Year Badge */
     .new-year-badge {
       position: absolute;
-      top: 6rem; /* Adjust position as needed */
+      top: 6rem;
       right: 2rem;
       background: rgba(251, 191, 36, 0.1);
       border: 1px solid var(--gold);
@@ -165,13 +162,16 @@ const Portfolio = () => {
       gap: 0.5rem;
       animation: float 3s ease-in-out infinite;
       box-shadow: 0 0 10px rgba(251, 191, 36, 0.2);
-      z-index: 10;
     }
 
     @keyframes float {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-5px); }
     }
+
+    .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.1; }
+    .hero h2 { font-size: 2rem; color: var(--text-muted); margin-bottom: 2rem; }
+    .hero p { max-width: 650px; font-size: 1.125rem; color: var(--text-muted); margin-bottom: 2.5rem; line-height: 1.6; }
 
     .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
     .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 2rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; border: none; text-decoration: none; transition: all 0.2s; }
@@ -398,12 +398,12 @@ const Portfolio = () => {
 
       {/* Hero Section */}
       <section id="home" className="hero">
-        
-        {/* NEW YEAR 2026 BADGE */}
-        <div className="new-year-badge">
-          <Sparkles size={16} /> Happy New Year 2026!
-        </div>
 
+        {/* Happy New Year 2026 Badge */}
+        <div className="new-year-badge">
+          <Sparkles size={16} /> <span>Happy New Year 2026!</span>
+        </div>
+        
         <div className="badge">
           <Shield size={16} />
           <span>Certified Azure Database Administrator</span>
