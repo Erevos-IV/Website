@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Database, Server, Shield, Activity, Terminal, Layers, Mail, Linkedin, Github, ChevronDown, Clock, Award, GraduationCap, Cloud, ChevronLeft, ChevronRight, X, Copy, Check } from 'lucide-react';
+import { Database, Server, Shield, Activity, Terminal, Layers, Mail, Linkedin, Github, ChevronDown, Clock, Award, GraduationCap, Cloud, ChevronLeft, ChevronRight, X, Copy, Check, Sparkles } from 'lucide-react';
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -21,7 +21,7 @@ const Portfolio = () => {
     },
     {
       id: 3,
-      src: "/cert-oracle-oci-Foundations.png",
+      src: "/cert-oracle-associate.png", 
       alt: "Oracle Certified Associate"
     }
   ];
@@ -84,6 +84,7 @@ const Portfolio = () => {
       --accent: #3b82f6;
       --accent-hover: #2563eb;
       --border: #334155;
+      --gold: #fbbf24;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -129,6 +130,7 @@ const Portfolio = () => {
       align-items: center;
       text-align: center;
       padding: 8rem 1rem 4rem;
+      position: relative;
     }
     .badge {
       display: inline-flex;
@@ -145,6 +147,31 @@ const Portfolio = () => {
     .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.1; }
     .hero h2 { font-size: 2rem; color: var(--text-muted); margin-bottom: 2rem; }
     .hero p { max-width: 650px; font-size: 1.125rem; color: var(--text-muted); margin-bottom: 2.5rem; line-height: 1.6; }
+
+    /* New Year Badge */
+    .new-year-badge {
+      position: absolute;
+      top: 6rem; /* Adjust position as needed */
+      right: 2rem;
+      background: rgba(251, 191, 36, 0.1);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      animation: float 3s ease-in-out infinite;
+      box-shadow: 0 0 10px rgba(251, 191, 36, 0.2);
+      z-index: 10;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
 
     .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
     .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 2rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; border: none; text-decoration: none; transition: all 0.2s; }
@@ -347,6 +374,7 @@ const Portfolio = () => {
       .timeline-header { flex-direction: column; gap: 0.5rem; }
       .cert-image { max-height: 180px; }
       .modal-close { top: -40px; right: 0; }
+      .new-year-badge { top: 4.5rem; right: 1rem; font-size: 0.8rem; }
     }
   `;
 
@@ -371,6 +399,11 @@ const Portfolio = () => {
       {/* Hero Section */}
       <section id="home" className="hero">
         
+        {/* NEW YEAR 2026 BADGE */}
+        <div className="new-year-badge">
+          <Sparkles size={16} /> Happy New Year 2026!
+        </div>
+
         <div className="badge">
           <Shield size={16} />
           <span>Certified Azure Database Administrator</span>
@@ -501,7 +534,7 @@ const Portfolio = () => {
             <div className="card-icon"><Database /></div>
             <h3>Database Administration</h3>
             <ul>
-              <li><span className="dot"></span>SQL Server 2016, 2019, 2022, 2025</li>
+              <li><span className="dot"></span>SQL Server 2016, 2019, 2022</li>
               <li><span className="dot"></span>Oracle RAC 11g, 12c, 19c</li>
               <li><span className="dot"></span>High Availability & Disaster Recovery (HADR)</li>
               <li><span className="dot"></span>Install, Patching & Upgrades</li>
