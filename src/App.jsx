@@ -23,6 +23,11 @@ const Portfolio = () => {
       id: 3,
       src: "/cert-oracle-associate.png",
       alt: "Oracle Certified Associate" 
+    },
+    {
+      id: 4,
+      src: "/cert-oracle-ADB.png",
+      alt: "Oracle Certified Autonomous DB"
     }
   ];
 
