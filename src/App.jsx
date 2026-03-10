@@ -35,7 +35,7 @@ const Portfolio = () => {
       icon: Cloud,
       color: "#a855f7",
       bgColor: "rgba(168, 85, 247, 0.1)",
-      skills: ["Azure Database Services", "GCP Cloud SQL", "Ansible", "Terraform", "PowerShell"]
+      skills: ["Azure Database Services", "Google Cloud SQL", "Ansible", "Terraform"]
     }
   ];
 
@@ -517,9 +517,9 @@ const Portfolio = () => {
         </div>
 
         <h1>Vassileios Gousetis</h1>
-        <h2>Database Architecture & Performance Expert</h2>
+        <h2>Database Architecture & Performance Specialist</h2>
         <p style={{maxWidth: '650px', fontSize: '1.125rem', color: '#cbd5e1', marginBottom: '2.5rem', lineHeight: '1.6'}}>
-          Specializing in SQL Server, Oracle, and Cloud Database solutions. Trusted to architect, optimize, and maintain enterprise-grade database infrastructure across multi-platform environments.
+          4+ years of hands-on experience optimizing enterprise database infrastructure. Specialized in SQL Server, Oracle, and cloud database solutions across Azure and Google Cloud.
         </p>
 
         <div className="btn-group">
@@ -553,8 +553,8 @@ const Portfolio = () => {
         <div className="stats-bar">
           <div><div className="stat-number">650+</div><div className="stat-label">Databases Managed</div></div>
           <div><div className="stat-number">40TB+</div><div className="stat-label">Data Administered</div></div>
-          <div><div className="stat-number">8+</div><div className="stat-label">Years Experience</div></div>
-          <div><div className="stat-number">4</div><div className="stat-label">Cloud Platforms</div></div>
+          <div><div className="stat-number">4+</div><div className="stat-label">Years Experience</div></div>
+          <div><div className="stat-number">2</div><div className="stat-label">Cloud Platforms</div></div>
         </div>
       </div>
 
@@ -596,10 +596,24 @@ const Portfolio = () => {
             </div>
             <div className="timeline-company">Athens Exchange Group (ATHEX)</div>
             <ul className="timeline-list">
-              <li><span style={{color: '#3b82f6'}}>▹</span> Managing Google Cloud Database & Infrastructure</li>
-              <li><span style={{color: '#3b82f6'}}>▹</span> Oracle, SQL Server, and PostgreSQL administration</li>
-              <li><span style={{color: '#3b82f6'}}>▹</span> Complex database migrations and upgrades</li>
-              <li><span style={{color: '#3b82f6'}}>▹</span> Performance monitoring with OEM, Grafana, Solarwinds</li>
+              <li><span style={{color: '#3b82f6'}}>▹</span> Managing Google Cloud SQL & infrastructure technologies</li>
+              <li><span style={{color: '#3b82f6'}}>▹</span> Oracle, SQL Server, and PostgreSQL installation and patching</li>
+              <li><span style={{color: '#3b82f6'}}>▹</span> Complex database migrations across cloud platforms</li>
+              <li><span style={{color: '#3b82f6'}}>▹</span> Performance monitoring and optimization</li>
+            </ul>
+          </div>
+
+          <div className="timeline-item">
+            <div className="timeline-dot"></div>
+            <div className="timeline-header">
+              <h3>Researcher & Informatics Specialist</h3>
+              <span className="timeline-date"><Clock size={16} /> Sep 2024 - June 2025</span>
+            </div>
+            <div className="timeline-company">Hellenic Military Units Administration</div>
+            <ul className="timeline-list">
+              <li><span style={{color: '#a855f7'}}>▹</span> Technical support for specialized military applications</li>
+              <li><span style={{color: '#a855f7'}}>▹</span> Secure application development with SQL & Python</li>
+              <li><span style={{color: '#a855f7'}}>▹</span> Large-scale file system management</li>
             </ul>
           </div>
 
@@ -611,9 +625,9 @@ const Portfolio = () => {
             </div>
             <div className="timeline-company">Ernst & Young</div>
             <ul className="timeline-list">
-              <li><span style={{color: '#a855f7'}}>▹</span> ETL pipelines using Python, SQL, SSIS</li>
-              <li><span style={{color: '#a855f7'}}>▹</span> Credit risk data analysis & modeling</li>
-              <li><span style={{color: '#a855f7'}}>▹</span> CDM configuration & automation</li>
+              <li><span style={{color: '#10b981'}}>▹</span> ETL pipeline development using Python, SQL, SSIS</li>
+              <li><span style={{color: '#10b981'}}>▹</span> Credit risk data analysis and transformation</li>
+              <li><span style={{color: '#10b981'}}>▹</span> CDM configuration and optimization</li>
             </ul>
           </div>
 
@@ -625,10 +639,10 @@ const Portfolio = () => {
             </div>
             <div className="timeline-company">Netcompany - Instasoft</div>
             <ul className="timeline-list">
-              <li><span style={{color: '#10b981'}}>▹</span> Database administration & maintenance</li>
-              <li><span style={{color: '#10b981'}}>▹</span> Query optimization & index tuning</li>
-              <li><span style={{color: '#10b981'}}>▹</span> Table partitioning & archiving strategies</li>
-              <li><span style={{color: '#10b981'}}>▹</span> Backup & disaster recovery procedures</li>
+              <li><span style={{color: '#f59e0b'}}>▹</span> Database administration and maintenance</li>
+              <li><span style={{color: '#f59e0b'}}>▹</span> Query optimization and index tuning</li>
+              <li><span style={{color: '#f59e0b'}}>▹</span> Table partitioning and archiving strategies</li>
+              <li><span style={{color: '#f59e0b'}}>▹</span> Backup and disaster recovery procedures</li>
             </ul>
           </div>
         </div>
@@ -656,17 +670,24 @@ const Portfolio = () => {
           <div>
             <h3 style={{marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#f1f5f9'}}><Award color="#f59e0b" size={24} /> Certifications</h3>
             <div style={{display: 'flex', gap: '0.75rem', marginBottom: '1.5rem'}}>
-              <Award color="#f59e0b" size={20} />
+              <Award color="#3b82f6" size={20} />
               <div>
-                <div style={{fontWeight: 'bold', color: '#f1f5f9'}}>Microsoft Certified: Azure Database Administrator</div>
-                <div style={{fontSize: '0.85rem', color: '#94a3b8'}}>2024</div>
+                <div style={{fontWeight: 'bold', color: '#f1f5f9'}}>Azure Database Administrator</div>
+                <div style={{fontSize: '0.85rem', color: '#94a3b8'}}>Microsoft Certified</div>
               </div>
             </div>
             <div style={{display: 'flex', gap: '0.75rem', marginBottom: '1.5rem'}}>
-              <Award color="#f59e0b" size={20} />
+              <Award color="#3b82f6" size={20} />
               <div>
-                <div style={{fontWeight: 'bold', color: '#f1f5f9'}}>Oracle Certified Associate</div>
-                <div style={{fontSize: '0.85rem', color: '#94a3b8'}}>2024</div>
+                <div style={{fontWeight: 'bold', color: '#f1f5f9'}}>Azure Data Fundamentals</div>
+                <div style={{fontSize: '0.85rem', color: '#94a3b8'}}>Microsoft Certified</div>
+              </div>
+            </div>
+            <div style={{display: 'flex', gap: '0.75rem'}}>
+              <Award color="#a855f7" size={20} />
+              <div>
+                <div style={{fontWeight: 'bold', color: '#f1f5f9'}}>Oracle Associate DBA</div>
+                <div style={{fontSize: '0.85rem', color: '#94a3b8'}}>Oracle Certified</div>
               </div>
             </div>
           </div>
@@ -677,7 +698,14 @@ const Portfolio = () => {
               <Zap color="#fbbf24" size={20} />
               <div>
                 <div style={{fontWeight: 'bold', color: '#f1f5f9'}}>Distinguished IT Student</div>
-                <div style={{fontSize: '0.85rem', color: '#94a3b8'}}>2025, BCS</div>
+                <div style={{fontSize: '0.85rem', color: '#94a3b8'}}>2025 & 2023 - BCS</div>
+              </div>
+            </div>
+            <div style={{display: 'flex', gap: '0.75rem'}}>
+              <Zap color="#10b981" size={20} />
+              <div>
+                <div style={{fontWeight: 'bold', color: '#f1f5f9'}}>Ministry of Digital Governance</div>
+                <div style={{fontSize: '0.85rem', color: '#94a3b8'}}>Award recipient</div>
               </div>
             </div>
           </div>
@@ -686,12 +714,12 @@ const Portfolio = () => {
 
       {/* Technologies */}
       <section style={{textAlign: 'center'}}>
-        <h3 style={{color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '3rem', fontSize: '0.9rem', fontWeight: '700'}}>Tech Stack</h3>
+        <h3 style={{color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '3rem', fontSize: '0.9rem', fontWeight: '700'}}>Tech Stack & Tools</h3>
         <div className="tech-row">
-          {['SQL Server 2016-2025', 'Oracle RAC 19c', 'PostgreSQL', 'MySQL', 'Azure SQL'].map(t => <span key={t} className="tech-chip">{t}</span>)}
+          {['SQL Server 2016-2025', 'Oracle RAC 19c', 'PostgreSQL', 'MySQL', 'MariaDB'].map(t => <span key={t} className="tech-chip">{t}</span>)}
         </div>
         <div className="tech-row">
-          {['Azure Database', 'Google Cloud SQL', 'Ansible', 'Terraform', 'PowerShell'].map(t => <span key={t} className="tech-chip">{t}</span>)}
+          {['Azure SQL Database', 'Google Cloud SQL', 'Ansible', 'Terraform', 'PowerShell'].map(t => <span key={t} className="tech-chip">{t}</span>)}
         </div>
         <div className="tech-row">
           {['Grafana', 'Solarwinds', 'OEM 13c', 'Python', 'SSIS'].map(t => <span key={t} className="tech-chip">{t}</span>)}
@@ -732,7 +760,7 @@ const Portfolio = () => {
         <div style={{display: 'flex', justifyContent: 'center', gap: '1.5rem', marginBottom: '2rem'}}>
           <a href="https://www.linkedin.com/in/vasileiosgoysetis-7378101b9" target="_blank" rel="noopener noreferrer" className="btn btn-secondary"><Linkedin size={18} /> LinkedIn</a>
         </div>
-        <p>© {new Date().getFullYear()} Vassileios Gousetis. Built with React & modern web technologies.</p>
+        <p>© {new Date().getFullYear()} Vassileios Gousetis. Database Architecture & Performance Expert</p>
       </footer>
     </div>
   );
