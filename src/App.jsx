@@ -468,10 +468,8 @@ const Portfolio = () => {
         /* Footer */
         footer {
           background: linear-gradient(180deg, transparent, rgba(15, 23, 42, 0.8));
-          text-align: center;
-          padding: 3rem 2rem;
+          padding: 4rem 2rem 3rem;
           color: #94a3b8;
-          font-size: 0.9rem;
           border-top: 1px solid rgba(59, 130, 246, 0.1);
         }
         
@@ -485,6 +483,96 @@ const Portfolio = () => {
           color: #3b82f6;
         }
         
+        .footer-card {
+          background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(168, 85, 247, 0.05));
+          border: 1px solid rgba(59, 130, 246, 0.2);
+          border-radius: 1.5rem;
+          padding: 3rem 2rem;
+          max-width: 700px;
+          margin: 0 auto 3rem;
+          backdrop-filter: blur(8px);
+          text-align: center;
+        }
+        
+        .footer-card h2 {
+          font-size: 1.75rem;
+          font-weight: 800;
+          color: #f1f5f9;
+          margin-bottom: 1rem;
+          background: linear-gradient(135deg, #60a5fa, #3b82f6);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        
+        .footer-card p {
+          color: #cbd5e1;
+          font-size: 1.05rem;
+          margin-bottom: 2rem;
+          line-height: 1.6;
+        }
+        
+        .footer-buttons {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+          gap: 1rem;
+          margin-bottom: 2rem;
+        }
+        
+        .footer-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          padding: 1rem;
+          border-radius: 0.75rem;
+          font-weight: 600;
+          cursor: pointer;
+          border: none;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          font-size: 0.95rem;
+        }
+        
+        .footer-btn-primary {
+          background: linear-gradient(135deg, #3b82f6, #2563eb);
+          color: white;
+          box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        .footer-btn-primary:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 12px 30px rgba(59, 130, 246, 0.4);
+        }
+        
+        .footer-btn-secondary {
+          background-color: rgba(30, 41, 59, 0.8);
+          border: 1.5px solid rgba(59, 130, 246, 0.3);
+          color: #f1f5f9;
+        }
+        
+        .footer-btn-secondary:hover {
+          background-color: rgba(59, 130, 246, 0.15);
+          border-color: #3b82f6;
+          color: #60a5fa;
+        }
+        
+        .footer-divider {
+          border-top: 1px solid rgba(59, 130, 246, 0.2);
+          padding-top: 2rem;
+          margin-top: 2rem;
+        }
+        
+        .footer-credit {
+          color: #94a3b8;
+          margin-bottom: 0.25rem;
+          font-weight: 500;
+        }
+        
+        .footer-subtitle {
+          color: #64748b;
+          font-size: 0.85rem;
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
           nav { padding: 1rem; }
@@ -492,6 +580,8 @@ const Portfolio = () => {
           .hero { padding: 6rem 1rem 3rem; }
           section { padding: 4rem 1rem; }
           .stats-bar { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+          .footer-card { padding: 2rem 1.5rem; }
+          .footer-buttons { grid-template-columns: 1fr; }
         }
       `}</style>
 
@@ -726,6 +816,43 @@ const Portfolio = () => {
         </div>
       </section>
 
+      {/* Enhanced Card-Style Footer */}
+      <footer>
+        <div className="footer-card">
+          <h2>Ready to Optimize Your Database?</h2>
+          <p>Let's discuss how I can help improve your database performance and architecture.</p>
+          
+          <div className="footer-buttons">
+            <a href="mailto:vasilhsgxr5000@gmail.com" className="footer-btn footer-btn-primary">
+              <Mail size={20} />
+              Send Email
+            </a>
+            <button onClick={handleCopyEmail} className="footer-btn footer-btn-secondary">
+              {copied ? (
+                <>
+                  <Check size={20} style={{color: '#10b981'}} />
+                  Copied!
+                </>
+              ) : (
+                <>
+                  <Copy size={20} />
+                  Copy Email
+                </>
+              )}
+            </button>
+            <a href="https://www.linkedin.com/in/vasileiosgoysetis-7378101b9" target="_blank" rel="noopener noreferrer" className="footer-btn footer-btn-secondary">
+              <Linkedin size={20} />
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <div className="footer-divider">
+          <p className="footer-credit">© {new Date().getFullYear()} Vassileios Gousetis</p>
+          <p className="footer-subtitle">Database Architecture & Performance Specialist</p>
+        </div>
+      </footer>
+
       {/* Contact Modal */}
       {isContactModalOpen && (
         <div className="modal-overlay" onClick={() => setIsContactModalOpen(false)}>
@@ -751,17 +878,6 @@ const Portfolio = () => {
           </div>
         </div>
       )}
-
-      {/* Footer */}
-      <footer>
-        <div style={{marginBottom: '1.5rem'}}>
-          <a href="mailto:vasilhsgxr5000@gmail.com" style={{fontSize: '1.1rem', fontWeight: 'bold'}}>vasilhsgxr5000@gmail.com</a>
-        </div>
-        <div style={{display: 'flex', justifyContent: 'center', gap: '1.5rem', marginBottom: '2rem'}}>
-          <a href="https://www.linkedin.com/in/vasileiosgoysetis-7378101b9" target="_blank" rel="noopener noreferrer" className="btn btn-secondary"><Linkedin size={18} /> LinkedIn</a>
-        </div>
-        <p>© {new Date().getFullYear()} Vassileios Gousetis. Database Architecture & Performance Expert</p>
-      </footer>
     </div>
   );
 };
