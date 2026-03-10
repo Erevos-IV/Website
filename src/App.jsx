@@ -20,7 +20,7 @@ const Portfolio = () => {
       icon: Database,
       color: "#3b82f6",
       bgColor: "rgba(59, 130, 246, 0.1)",
-      skills: ["SQL Server 2016-2025", "Oracle RAC 19c", "PostgreSQL", "MySQL", "HADR Configuration"]
+      skills: ["SQL Server 2012-2025", "Oracle 12c-19c", "PostgreSQL", "MySQL", "HADR Configuration"]
     },
     {
       title: "Performance Optimization",
@@ -34,7 +34,7 @@ const Portfolio = () => {
       icon: Cloud,
       color: "#a855f7",
       bgColor: "rgba(168, 85, 247, 0.1)",
-      skills: ["Azure Database Services", "Google Cloud SQL", "Ansible", "Terraform"]
+      skills: ["Azure Database Services", "Google Cloud SQL", "Ansible", "Powershell"]
     }
   ];
 
