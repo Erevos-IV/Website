@@ -20,7 +20,7 @@ const Portfolio = () => {
       icon: Database,
       color: "#3b82f6",
       bgColor: "rgba(59, 130, 246, 0.1)",
-      skills: ["SQL Server 2012-2025", "Oracle 12c-19c", "PostgreSQL", "MySQL", "HADR Configuration"]
+      skills: ["SQL Server 2012-2025", "Oracle RAC 12-19c", "PostgreSQL", "MySQL", "HADR Configuration"]
     },
     {
       title: "Performance Optimization",
@@ -772,10 +772,17 @@ const Portfolio = () => {
                 <div style={{fontSize: '0.85rem', color: '#94a3b8'}}>Microsoft Certified</div>
               </div>
             </div>
-            <div style={{display: 'flex', gap: '0.75rem'}}>
+            <div style={{display: 'flex', gap: '0.75rem', marginBottom: '1.5rem'}}>
               <Award color="#a855f7" size={20} />
               <div>
                 <div style={{fontWeight: 'bold', color: '#f1f5f9'}}>Oracle Associate DBA</div>
+                <div style={{fontSize: '0.85rem', color: '#94a3b8'}}>Oracle Certified</div>
+              </div>
+            </div>
+            <div style={{display: 'flex', gap: '0.75rem'}}>
+              <Award color="#a855f7" size={20} />
+              <div>
+                <div style={{fontWeight: 'bold', color: '#f1f5f9'}}>Oracle Autonomous Professional</div>
                 <div style={{fontSize: '0.85rem', color: '#94a3b8'}}>Oracle Certified</div>
               </div>
             </div>
