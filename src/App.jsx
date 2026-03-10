@@ -5,7 +5,6 @@ const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [currentCert, setCurrentCert] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const certifications = [
@@ -50,12 +49,12 @@ const Portfolio = () => {
   };
 
   useEffect(() => {
-    if (isModalOpen || isContactModalOpen) return;
+    if (isModalOpen) return;
     const timer = setInterval(() => {
       setCurrentCert((prev) => (prev + 1) % certifications.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [currentCert, isModalOpen, isContactModalOpen]);
+  }, [currentCert, isModalOpen]);
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -616,7 +615,7 @@ const Portfolio = () => {
           <button onClick={() => scrollToSection('experience')} className="btn btn-primary">
             <Sparkles size={18} /> View My Work
           </button>
-          <button onClick={() => setIsContactModalOpen(true)} className="btn btn-secondary">
+          <button onClick={() => scrollToSection('connect')} className="btn btn-secondary">
             <Mail size={18} /> Get In Touch
           </button>
         </div>
@@ -817,7 +816,7 @@ const Portfolio = () => {
       </section>
 
       {/* Enhanced Card-Style Footer */}
-      <footer>
+      <footer id="connect">
         <div className="footer-card">
           <h2>Let's Connect</h2>
           <p>Exchange ideas on database architecture and performance optimization.</p>
@@ -852,22 +851,6 @@ const Portfolio = () => {
           <p className="footer-subtitle">Database Administrator & Data Specialist</p>
         </div>
       </footer>
-
-      {/* Contact Modal */}
-      {isContactModalOpen && (
-        <div className="modal-overlay" onClick={() => setIsContactModalOpen(false)}>
-          <div style={{background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.95))', border: '1px solid rgba(59, 130, 246, 0.3)', borderRadius: '1.25rem', padding: '2.5rem', width: '100%', maxWidth: '400px', textAlign: 'center', backdropFilter: 'blur(8px)'}} onClick={e => e.stopPropagation()}>
-            <button onClick={() => setIsContactModalOpen(false)} style={{position: 'absolute', top: '1rem', right: '1rem', background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', fontSize: '1.5rem'}}><X size={24} /></button>
-            <h3 style={{fontSize: '1.5rem', marginBottom: '0.5rem', color: '#f1f5f9'}}>Get In Touch</h3>
-            <p style={{color: '#94a3b8', marginBottom: '2rem'}}>Let's discuss your database challenges</p>
-            <div style={{background: 'rgba(15, 23, 42, 0.8)', border: '1px solid rgba(59, 130, 246, 0.3)', padding: '1rem', borderRadius: '0.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem', marginBottom: '2rem', fontFamily: 'monospace', color: '#f1f5f9'}}>
-              <span>vasilhsgxr5000@gmail.com</span>
-              <button onClick={handleCopyEmail} style={{background: 'none', border: 'none', color: '#60a5fa', cursor: 'pointer'}}>{copied ? <Check size={20} /> : <Copy size={20} />}</button>
-            </div>
-            <a href="mailto:vasilhsgxr5000@gmail.com" className="btn btn-primary" style={{width: '100%', justifyContent: 'center'}}>Open Email Client</a>
-          </div>
-        </div>
-      )}
 
       {/* Certification Modal */}
       {isModalOpen && (
