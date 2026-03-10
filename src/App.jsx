@@ -819,8 +819,8 @@ const Portfolio = () => {
       {/* Enhanced Card-Style Footer */}
       <footer>
         <div className="footer-card">
-          <h2>Ready to Optimize Your Database?</h2>
-          <p>Let's discuss how I can help improve your database performance and architecture.</p>
+          <h2>Let's Connect</h2>
+          <p>Exchange ideas on database architecture and performance optimization.</p>
           
           <div className="footer-buttons">
             <a href="mailto:vasilhsgxr5000@gmail.com" className="footer-btn footer-btn-primary">
@@ -849,7 +849,7 @@ const Portfolio = () => {
 
         <div className="footer-divider">
           <p className="footer-credit">© {new Date().getFullYear()} Vassileios Gousetis</p>
-          <p className="footer-subtitle">Database Architecture & Performance Specialist</p>
+          <p className="footer-subtitle">Database Administrator & Data Specialist</p>
         </div>
       </footer>
 
