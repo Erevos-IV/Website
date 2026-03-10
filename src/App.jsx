@@ -27,7 +27,7 @@ const Portfolio = () => {
       icon: TrendingUp,
       color: "#10b981",
       bgColor: "rgba(16, 185, 129, 0.1)",
-      skills: ["Query Tuning", "Index Optimization", "Wait Stats Analysis", "Deadlock Resolution"]
+      skills: ["Query Tuning", "Index Optimization", "Wait Stats Analysis", "Deadlock Resolution", "Partitioning & Sharding"]
     },
     {
       title: "Cloud & Automation",
