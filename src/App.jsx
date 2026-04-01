@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Database, Server, Shield, Activity, Mail, Linkedin, ChevronDown, Clock, Award, GraduationCap, Cloud, ChevronLeft, ChevronRight, X, Copy, Check, Sparkles, Zap, TrendingUp, ExternalLink, ArrowRight } from 'lucide-react';
+import { Database, Mail, Linkedin, Clock, Award, GraduationCap, ChevronLeft, ChevronRight, X, Copy, Check, Sparkles, Zap, TrendingUp, ArrowRight } from 'lucide-react';
 
 const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -32,7 +32,7 @@ const Portfolio = () => {
     },
     {
       title: "Cloud & Automation",
-      icon: Cloud,
+      icon: Database,
       color: "#a855f7",
       bgColor: "rgba(168, 85, 247, 0.1)",
       skills: ["Azure Database Services", "Google Cloud SQL", "Ansible", "Terraform"]
@@ -129,17 +129,19 @@ const Portfolio = () => {
         }
         
         .nav-content {
-          max-width: 1200px;
+          max-width: 1400px;
           margin: 0 auto;
           display: flex;
           justify-content: space-between;
           align-items: center;
+          width: 100%;
+          padding: 0;
         }
         
         .nav-logo {
-          font-size: 1.5rem;
-          font-weight: 800;
-          letter-spacing: -1px;
+          font-size: 1.3rem;
+          font-weight: 900;
+          letter-spacing: 1.5px;
           display: flex;
           align-items: center;
           gap: 0.75rem;
@@ -147,11 +149,14 @@ const Portfolio = () => {
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           font-family: 'Space Mono', monospace;
+          white-space: nowrap;
+          flex-shrink: 0;
         }
         
         .nav-links {
           display: flex;
-          gap: 2.5rem;
+          gap: 3rem;
+          margin-left: auto;
         }
         
         .nav-btn {
@@ -159,29 +164,29 @@ const Portfolio = () => {
           border: none;
           color: #94a3b8;
           cursor: pointer;
-          font-size: 0.95rem;
-          font-weight: 500;
+          font-size: 0.75rem;
+          font-weight: 700;
           transition: all 0.3s ease;
           position: relative;
           text-transform: uppercase;
-          letter-spacing: 0.5px;
-          font-size: 0.8rem;
+          letter-spacing: 1.5px;
+          white-space: nowrap;
         }
         
         .nav-btn:hover, .nav-btn.active {
           color: #00d9ff;
-          text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+          text-shadow: 0 0 15px rgba(0, 217, 255, 0.8);
         }
         
         .nav-btn.active::after {
           content: '';
           position: absolute;
-          bottom: -8px;
+          bottom: -10px;
           left: 0;
           right: 0;
           height: 2px;
           background: linear-gradient(90deg, #00d9ff, #00ff88);
-          box-shadow: 0 0 10px rgba(0, 217, 255, 0.6);
+          box-shadow: 0 0 15px rgba(0, 217, 255, 0.8);
         }
         
         /* Hero Section */
@@ -276,7 +281,6 @@ const Portfolio = () => {
           border: none;
           text-decoration: none;
           transition: all 0.3s ease;
-          font-size: 1rem;
           position: relative;
           overflow: hidden;
           text-transform: uppercase;
@@ -386,7 +390,7 @@ const Portfolio = () => {
         
         /* Cards */
         .card {
-          group relative;
+          position: relative;
           background: linear-gradient(135deg, rgba(0, 217, 255, 0.05), rgba(168, 85, 247, 0.05));
           border: 1px solid rgba(0, 217, 255, 0.2);
           border-radius: 16px;
@@ -435,6 +439,7 @@ const Portfolio = () => {
           font-weight: 700;
           position: relative;
           z-index: 1;
+          color: #fff;
         }
         
         .card ul {
@@ -759,7 +764,9 @@ const Portfolio = () => {
         
         /* Responsive */
         @media (max-width: 768px) {
-          nav { padding: 1rem; }
+          nav { padding: 1rem 1.5rem; }
+          .nav-content { padding: 0; }
+          .nav-logo { font-size: 1rem; gap: 0.5rem; }
           .nav-links { display: none; }
           .hero { padding: 6rem 1rem 3rem; }
           section { padding: 4rem 1rem; }
@@ -779,13 +786,13 @@ const Portfolio = () => {
         <div className="nav-content">
           <div className="nav-logo">
             <Database size={28} />
-            <span>VASSILEIOS<span style={{color: '#00ff88'}}>.DBA</span></span>
+            <span>DBAMIND</span>
           </div>
           <div className="nav-links">
-            <button onClick={() => scrollToSection('home')} className={`nav-btn ${activeSection === 'home' ? 'active' : ''}`}>Home</button>
-            <button onClick={() => scrollToSection('expertise')} className={`nav-btn ${activeSection === 'expertise' ? 'active' : ''}`}>Expertise</button>
-            <button onClick={() => scrollToSection('experience')} className={`nav-btn ${activeSection === 'experience' ? 'active' : ''}`}>Experience</button>
-            <button onClick={() => scrollToSection('education')} className={`nav-btn ${activeSection === 'education' ? 'active' : ''}`}>Education</button>
+            <button onClick={() => scrollToSection('home')} className={`nav-btn ${activeSection === 'home' ? 'active' : ''}`}>HOME</button>
+            <button onClick={() => scrollToSection('expertise')} className={`nav-btn ${activeSection === 'expertise' ? 'active' : ''}`}>EXPERTISE</button>
+            <button onClick={() => scrollToSection('experience')} className={`nav-btn ${activeSection === 'experience' ? 'active' : ''}`}>EXPERIENCE</button>
+            <button onClick={() => scrollToSection('education')} className={`nav-btn ${activeSection === 'education' ? 'active' : ''}`}>EDUCATION</button>
           </div>
         </div>
       </nav>
@@ -816,11 +823,11 @@ const Portfolio = () => {
           {/* Certification Carousel */}
           <div style={{marginTop: '4rem', width: '100%', maxWidth: '600px', margin: '4rem auto 0'}}>
             <div style={{position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2rem'}}>
-              <button onClick={prevCert} style={{background: 'rgba(0, 217, 255, 0.1)', border: '1px solid rgba(0, 217, 255, 0.3)', color: '#00d9ff', cursor: 'pointer', fontSize: '1.5rem', padding: '0.75rem', borderRadius: '8px', transition: 'all 0.3s', backdropFilter: 'blur(10px)'}}><ChevronLeft size={28} /></button>
+              <button onClick={prevCert} style={{background: 'rgba(0, 217, 255, 0.1)', border: '1px solid rgba(0, 217, 255, 0.3)', color: '#00d9ff', cursor: 'pointer', fontSize: '1.5rem', padding: '0.75rem', borderRadius: '8px', transition: 'all 0.3s', backdropFilter: 'blur(10px)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><ChevronLeft size={28} /></button>
               <div style={{flex: 1, cursor: 'pointer'}} onClick={() => setIsModalOpen(true)}>
                 <img src={certifications[currentCert].src} alt={certifications[currentCert].alt} style={{maxWidth: '100%', height: 'auto', maxHeight: '280px', borderRadius: '12px', border: '1px solid rgba(0, 217, 255, 0.3)', filter: 'drop-shadow(0 15px 35px rgba(0, 217, 255, 0.2))'}} />
               </div>
-              <button onClick={nextCert} style={{background: 'rgba(0, 217, 255, 0.1)', border: '1px solid rgba(0, 217, 255, 0.3)', color: '#00d9ff', cursor: 'pointer', fontSize: '1.5rem', padding: '0.75rem', borderRadius: '8px', transition: 'all 0.3s', backdropFilter: 'blur(10px)'}}><ChevronRight size={28} /></button>
+              <button onClick={nextCert} style={{background: 'rgba(0, 217, 255, 0.1)', border: '1px solid rgba(0, 217, 255, 0.3)', color: '#00d9ff', cursor: 'pointer', fontSize: '1.5rem', padding: '0.75rem', borderRadius: '8px', transition: 'all 0.3s', backdropFilter: 'blur(10px)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><ChevronRight size={28} /></button>
             </div>
             <div style={{display: 'flex', gap: '0.75rem', justifyContent: 'center', marginTop: '2rem'}}>
               {certifications.map((_, idx) => (
@@ -852,7 +859,7 @@ const Portfolio = () => {
                 <div className="card-icon" style={{background: exp.bgColor, color: exp.color}}>
                   <Icon size={32} />
                 </div>
-                <h3 style={{color: '#fff'}}>{exp.title}</h3>
+                <h3>{exp.title}</h3>
                 <ul>
                   {exp.skills.map((skill, i) => (
                     <li key={i}>
