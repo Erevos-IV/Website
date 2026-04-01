@@ -112,9 +112,11 @@ const Portfolio = () => {
         nav {
           position: fixed;
           top: 0;
+          left: 0;
+          right: 0;
           width: 100%;
           z-index: 1000;
-          padding: 1.5rem 2rem;
+          padding: 1.5rem 0;
           backdrop-filter: blur(20px);
           background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5));
           border-bottom: 1px solid rgba(0, 217, 255, 0.2);
@@ -122,20 +124,20 @@ const Portfolio = () => {
         }
 
         nav.scrolled {
-          padding: 1rem 2rem;
+          padding: 1rem 0;
           background: linear-gradient(180deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.8));
           border-bottom: 1px solid rgba(0, 217, 255, 0.3);
           box-shadow: 0 10px 40px rgba(0, 217, 255, 0.1);
         }
         
         .nav-content {
-          max-width: 1400px;
-          margin: 0 auto;
+          max-width: 100%;
+          width: 100%;
+          margin: 0;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          width: 100%;
-          padding: 0;
+          padding: 0 3rem;
         }
         
         .nav-logo {
@@ -151,12 +153,14 @@ const Portfolio = () => {
           font-family: 'Space Mono', monospace;
           white-space: nowrap;
           flex-shrink: 0;
+          min-width: fit-content;
         }
         
         .nav-links {
           display: flex;
           gap: 3rem;
           margin-left: auto;
+          justify-content: flex-end;
         }
         
         .nav-btn {
@@ -181,7 +185,7 @@ const Portfolio = () => {
         .nav-btn.active::after {
           content: '';
           position: absolute;
-          bottom: -10px;
+          bottom: -12px;
           left: 0;
           right: 0;
           height: 2px;
@@ -764,8 +768,8 @@ const Portfolio = () => {
         
         /* Responsive */
         @media (max-width: 768px) {
-          nav { padding: 1rem 1.5rem; }
-          .nav-content { padding: 0; }
+          nav { padding: 1rem 0; }
+          .nav-content { padding: 0 1.5rem; }
           .nav-logo { font-size: 1rem; gap: 0.5rem; }
           .nav-links { display: none; }
           .hero { padding: 6rem 1rem 3rem; }
