@@ -1,20 +1,21 @@
 /* Base Reset & Variables */
 :root {
-  --bg-dark: #0f172a;
-  --bg-card: #1e293b;
-  --bg-card-hover: #334155;
-  --text-main: #f1f5f9;
-  --text-muted: #94a3b8;
-  --accent: #3b82f6;
-  --accent-hover: #2563eb;
-  --border: #334155;
+  /* Sunny Beachy Day palette mapped to existing variable names */
+  --bg-dark: #FFF7ED;          /* page background (light sand) */
+  --bg-card: #FFFFFF;          /* card / surface */
+  --bg-card-hover: #F4D29A;    /* hover / elevated sand */
+  --text-main: #062C33;       /* deep teal for readable text */
+  --text-muted: #6B6B6B;      /* muted text */
+  --accent: #00A3A3;          /* ocean teal (primary accent) */
+  --accent-hover: #007D7D;    /* darker ocean on hover */
+  --border: rgba(2,22,23,0.06); /* subtle border/shadow tint */
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: var(--bg-dark);
+  background: linear-gradient(180deg, #E6F7FF 0%, var(--bg-dark) 60%);
   color: var(--text-main);
   line-height: 1.5;
   width: 100%;
@@ -25,7 +26,7 @@ body {
 .app-container {
   width: 100%;
   min-height: 100vh;
-  background-color: var(--bg-dark);
+  background-color: transparent; /* gradient on body handles page background */
   display: flex;
   flex-direction: column;
   align-items: center; /* Forces all sections to be centered in the column */
@@ -41,7 +42,8 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(15, 23, 42, 0.95);
+  background-color: rgba(255, 209, 102, 0.92); /* warm sun tint */
+  color: var(--text-main);
   backdrop-filter: blur(8px);
   z-index: 1000;
   border-bottom: 1px solid var(--border);
@@ -102,8 +104,8 @@ section {
   border: none;
 }
 
-.btn-primary { background-color: var(--accent); color: white; }
-.btn-primary:hover { background-color: var(--accent-hover); }
+.btn-primary { background: linear-gradient(180deg, #FFD166, #FFB33A); color: white; }
+.btn-primary:hover { filter: brightness(.98); }
 .btn-secondary { background-color: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); }
 .btn-secondary:hover { background-color: var(--bg-card-hover); }
 
@@ -112,7 +114,7 @@ section {
   width: 100%;
   display: flex;
   justify-content: center;
-  background-color: rgba(30, 41, 59, 0.5);
+  background-color: rgba(255,255,255,0.6);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   padding: 3rem 0;
@@ -148,7 +150,7 @@ section {
 
 .card-icon {
   width: 3rem; height: 3rem;
-  background-color: rgba(59, 130, 246, 0.1);
+  background-color: rgba(0,163,163,0.08);
   border-radius: 0.5rem;
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 1.5rem; color: var(--accent);
@@ -173,7 +175,7 @@ section {
 .tech-chip:hover { border-color: var(--accent); color: var(--accent); }
 
 /* Footer */
-footer { width: 100%; text-align: center; padding: 3rem; background-color: #020617; color: var(--text-muted); font-size: 0.9rem; }
+footer { width: 100%; text-align: center; padding: 3rem; background: linear-gradient(180deg, rgba(135,206,235,0.04), rgba(255,247,230,0.02)); color: var(--text-muted); font-size: 0.9rem; }
 
 @media (max-width: 768px) {
   .hero h1 { font-size: 2.5rem; }
