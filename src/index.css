@@ -1,21 +1,24 @@
 /* Base Reset & Variables */
 :root {
-  /* Sunny Beachy Day palette mapped to existing variable names */
-  --bg-dark: #FFF7ED;          /* page background (light sand) */
-  --bg-card: #FFFFFF;          /* card / surface */
-  --bg-card-hover: #F4D29A;    /* hover / elevated sand */
-  --text-main: #062C33;       /* deep teal for readable text */
-  --text-muted: #6B6B6B;      /* muted text */
-  --accent: #00A3A3;          /* ocean teal (primary accent) */
-  --accent-hover: #007D7D;    /* darker ocean on hover */
-  --border: rgba(2,22,23,0.06); /* subtle border/shadow tint */
+  /* High-contrast palette (black mode) */
+  --bg-dark: #000000;          /* page background (pure black) */
+  --bg-card: #0A0A0A;          /* card / surface (near-black) */
+  --bg-card-hover: #151515;    /* hover / elevated surface */
+  --text-main: #FFFFFF;        /* primary text (white) */
+  --text-muted: #BFBFBF;       /* muted text (light gray) */
+  --accent: #FFD400;           /* vivid yellow (primary CTA) */
+  --accent-hover: #FFB400;     /* slightly darker yellow on hover */
+  --accent-2: #00E5FF;         /* electric cyan (links/focus) */
+  --border: rgba(255,255,255,0.12); /* visible border against dark surfaces */
+  --focus: #00E5FF;            /* focus ring color */
 }
 
+/* --- rest of the stylesheet unchanged except for color usages --- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: linear-gradient(180deg, #E6F7FF 0%, var(--bg-dark) 60%);
+  background-color: var(--bg-dark);
   color: var(--text-main);
   line-height: 1.5;
   width: 100%;
@@ -26,7 +29,7 @@ body {
 .app-container {
   width: 100%;
   min-height: 100vh;
-  background-color: transparent; /* gradient on body handles page background */
+  background-color: var(--bg-dark);
   display: flex;
   flex-direction: column;
   align-items: center; /* Forces all sections to be centered in the column */
@@ -42,8 +45,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(255, 209, 102, 0.92); /* warm sun tint */
-  color: var(--text-main);
+  background-color: rgba(10,10,10,0.95);
   backdrop-filter: blur(8px);
   z-index: 1000;
   border-bottom: 1px solid var(--border);
@@ -52,7 +54,7 @@ nav {
 .nav-logo { font-size: 1.25rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
 .nav-links { display: flex; gap: 2rem; }
 .nav-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.95rem; font-weight: 500; transition: color 0.2s; }
-.nav-btn:hover, .nav-btn.active { color: var(--accent); }
+.nav-btn:hover, .nav-btn.active { color: var(--accent-2); }
 
 /* SECTIONS - The Fix for Centering */
 section {
@@ -104,9 +106,18 @@ section {
   border: none;
 }
 
-.btn-primary { background: linear-gradient(180deg, #FFD166, #FFB33A); color: white; }
-.btn-primary:hover { filter: brightness(.98); }
-.btn-secondary { background-color: var(--bg-card); border: 1px solid var(--border); color: var(--text-main); }
+.btn-primary {
+  background-color: var(--accent);
+  color: var(--text-main);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.6);
+}
+.btn-primary:hover { background-color: var(--accent-hover); }
+
+.btn-secondary {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-main);
+}
 .btn-secondary:hover { background-color: var(--bg-card-hover); }
 
 /* Stats Bar - Full Width Fix */
@@ -114,7 +125,7 @@ section {
   width: 100%;
   display: flex;
   justify-content: center;
-  background-color: rgba(255,255,255,0.6);
+  background-color: rgba(10,10,10,0.8);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   padding: 3rem 0;
@@ -130,10 +141,10 @@ section {
   padding: 0 1.5rem;
 }
 
-.stat-number { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; }
+.stat-number { font-size: 2rem; font-weight: 700; margin-bottom: 0.25rem; color: var(--text-main); }
 .stat-label { font-size: 0.875rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
 
-.section-title { font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 4rem; align-self: center; }
+.section-title { font-size: 2.5rem; font-weight: 700; text-align: center; margin-bottom: 4rem; align-self: center; color: var(--text-main); }
 
 /* Grid Layouts */
 .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; width: 100%; }
@@ -150,12 +161,12 @@ section {
 
 .card-icon {
   width: 3rem; height: 3rem;
-  background-color: rgba(0,163,163,0.08);
+  background-color: rgba(255,212,0,0.06);
   border-radius: 0.5rem;
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 1.5rem; color: var(--accent);
 }
-.card h3 { font-size: 1.25rem; margin-bottom: 1rem; }
+.card h3 { font-size: 1.25rem; margin-bottom: 1rem; color: var(--text-main); }
 .card ul { list-style: none; color: var(--text-muted); }
 .card li { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; font-size: 0.95rem; }
 .dot { width: 6px; height: 6px; background-color: var(--accent); border-radius: 50%; }
@@ -164,7 +175,7 @@ section {
 .timeline-item { border-left: 2px solid var(--border); padding-left: 2rem; position: relative; margin-bottom: 3rem; }
 .timeline-dot { width: 1rem; height: 1rem; background-color: var(--accent); border-radius: 50%; position: absolute; left: -9px; top: 0; border: 4px solid var(--bg-dark); }
 .timeline-header { display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 0.5rem; }
-.timeline-header h3 { font-size: 1.5rem; }
+.timeline-header h3 { font-size: 1.5rem; color: var(--text-main); }
 .timeline-date { color: var(--accent); display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 500; }
 .timeline-company { font-size: 1.125rem; color: var(--text-muted); margin-bottom: 1rem; }
 .timeline-list li { margin-bottom: 0.5rem; display: flex; gap: 0.5rem; }
@@ -175,7 +186,13 @@ section {
 .tech-chip:hover { border-color: var(--accent); color: var(--accent); }
 
 /* Footer */
-footer { width: 100%; text-align: center; padding: 3rem; background: linear-gradient(180deg, rgba(135,206,235,0.04), rgba(255,247,230,0.02)); color: var(--text-muted); font-size: 0.9rem; }
+footer { width: 100%; text-align: center; padding: 3rem; background-color: #040404; color: var(--text-muted); font-size: 0.9rem; }
+
+/* Focus styles for accessibility */
+:focus {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
 
 @media (max-width: 768px) {
   .hero h1 { font-size: 2.5rem; }
