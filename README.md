@@ -1,98 +1,57 @@
-# Erevos-IV Website
+# Erevos‑IV — Personal Website
 
-This repository contains the source for the personal website of Erevos‑IV. It provides an easy-to-edit React + Vite site you can run locally, build for production, and deploy to common hosting platforms.
+This repository hosts the content and source for the Erevos‑IV personal website. The README below focuses on what the site is, what visitors can find here, and editorial and privacy notes — not on installation or build details.
 
-## Features
+## About the site
 
-- Lightweight React app powered by Vite for fast dev builds and HMR
-- Simple content structure in `src/` for quick edits
-- Ready to add TypeScript, Tailwind, or other tools as needed
+Erevos‑IV is a personal website showcasing projects, writing, and contact information for Vasileios (Erevos‑IV). The site highlights recent work, technical experiments, and occasional essays on software, systems design, and related interests.
 
-## Quick start (development)
+Core sections
 
-1. Install dependencies
+- Home — Featured projects and recent updates.
+- About — Short bio, interests, and background.
+- Projects — Curated list of notable projects with short descriptions, links to source code or demos, and tags (tech, date, status).
+- Writing / Blog — Essays, tutorials, and thoughts. Posts are arranged by date and tag and may include technical deep dives and opinion pieces.
+- Contact — Preferred contact methods, links to social profiles, and a contact form (when available).
 
-   ```bash
-   npm install
-   ```
+Tone & audience
 
-2. Start the development server (HMR enabled)
+The site is written for fellow engineers, open-source contributors, and anyone interested in systems and web development. Tone is technical but approachable: focused on clear explanations and practical takeaways.
 
-   ```bash
-   npm run dev
-   ```
+Content highlights (examples)
 
-3. Open the URL shown in the terminal (usually http://localhost:5173)
+- Selected deep dive into performance tuning for modern web apps
+- Walkthrough of a side project: architecture, tradeoffs, and lessons learned
+- Short posts on tooling choices, developer ergonomics, and deployment strategies
 
-## Build & preview (production)
+Editorial notes
 
-- Build the production bundle:
+- Keep posts focused and opinionated; include evidence or examples where appropriate.
+- Link to source repositories or demos for projects whenever possible.
+- Use concise summaries on project pages and link to longer write-ups.
+- For the blog, include a short author blurb and tags for discoverability.
 
-  ```bash
-  npm run build
-  ```
+Accessibility & design
 
-- Preview the production build locally:
+The site aims to follow accessibility best practices: semantic HTML, visible focus styles, and reasonable color contrast. If you notice accessibility issues, please open an issue describing the problem and suggested fixes.
 
-  ```bash
-  npm run preview
-  ```
+Privacy & analytics
 
-## Project structure
+If analytics are used, they are minimally invasive and configured to respect visitor privacy. No personal data is collected or stored without explicit consent. Third‑party embeds (if any) are documented on the site.
 
-- `index.html` — app entry
-- `src/` — application source code (components, pages, assets)
-- `public/` — static assets copied to the build
-- `package.json` — scripts and dependencies
+How to update content
 
-Edit files in `src/` to update the site's content and components.
+- Content lives in the `src/` directory (pages and components). Edit the relevant page files to update text or links.
+- For blog posts, follow the existing post format (frontmatter for title/date/tags and Markdown content).
+- Keep sensitive credentials and API keys out of the repository — use environment configuration when necessary.
 
-## Environment & configuration
+Contact & links
 
-If your site needs API keys or environment-specific values, create a `.env` file locally and keep secrets out of the repository. Vite uses `VITE_`-prefixed variables to expose values to client code.
+- GitHub: https://github.com/Erevos-IV
+- Email: listed on the Contact page of the site
 
-Example:
+Copyright & license
 
-```env
-VITE_API_URL=https://api.example.com
-```
+Content on this site is © Erevos‑IV. Add a LICENSE file in the repo to state reuse permissions (for example, CC BY‑SA for writing or MIT for code snippets).
 
-Access it in code as `import.meta.env.VITE_API_URL`.
-
-## Deployment
-
-This site can be deployed to many static hosts. Common options:
-
-- Vercel — automatic deployments from the repository; supports preview deployments for PRs
-- Netlify — connect the repo and set `npm run build` as the build command
-- GitHub Pages — use `gh-pages` or a GitHub Action to publish the `dist`/`build` folder
-
-Ensure your build command is `npm run build` and the publish directory matches Vite's output (usually `dist/`).
-
-## Contributing
-
-Contributions are welcome. Typical workflow:
-
-1. Fork the repository
-2. Create a branch for your change
-3. Make changes and run the dev server to verify
-4. Open a pull request describing your changes
-
-Alternatively, open an issue to propose larger changes or discuss ideas.
-
-## License
-
-Add a LICENSE file to this repository to specify licensing. If you're not sure, the MIT license is a permissive default.
-
-## Contact
-
-GitHub: https://github.com/Erevos-IV
-
----
-
-If you'd like, I can:
-- Add a LICENSE file (MIT, Apache-2.0, etc.)
-- Convert the project to TypeScript or add Tailwind CSS
-- Create a GitHub Action for automated deploys
-
-Tell me which of these you'd like and I'll make the change.
+If you want the README to emphasize different aspects (for example, more detail about the Projects section, a listing of featured projects, or a public content calendar), tell me what to include and I will update the file accordingly.
