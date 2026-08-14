@@ -958,7 +958,7 @@ export default function App() {
           <h1>VASSILEIOS GOUSETIS</h1>
           <h2>Your Friendly Neighborhood Database Architect</h2>
           <p>
-            Weaving indestructible database nets across high-stakes digital environments. 4+ years slinging enterprise database solutions across SQL Server, Oracle, and Cloud domains. Specialized in HADR, query tuning, and disaster recovery.
+            Weaving indestructible database nets across high-stakes digital environments. 4+ years slinging enterprise database solutions across SQL Server, Oracle, and Cloud domains. Specialized in Query tuning, Automation, and Monitoring - Alerting.
           </p>
 
           <div className="btn-group">
