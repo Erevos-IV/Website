@@ -1,16 +1,16 @@
 /* Base Reset & Variables */
 :root {
-  /* High-contrast palette (black mode) */
-  --bg-dark: #000000;          /* page background (pure black) */
-  --bg-card: #0A0A0A;          /* card / surface (near-black) */
-  --bg-card-hover: #151515;    /* hover / elevated surface */
+  /* Spiderman palette (red & blue) */
+  --bg-dark: #071022;          /* deep navy background */
+  --bg-card: #0F1724;          /* card / surface (dark navy) */
+  --bg-card-hover: #172033;    /* hover / elevated surface */
   --text-main: #FFFFFF;        /* primary text (white) */
-  --text-muted: #BFBFBF;       /* muted text (light gray) */
-  --accent: #FFD400;           /* vivid yellow (primary CTA) */
-  --accent-hover: #FFB400;     /* slightly darker yellow on hover */
-  --accent-2: #00E5FF;         /* electric cyan (links/focus) */
-  --border: rgba(255,255,255,0.12); /* visible border against dark surfaces */
-  --focus: #00E5FF;            /* focus ring color */
+  --text-muted: #CBD5E1;       /* muted text (light slate) */
+  --accent: #E41B23;           /* Spiderman red (primary CTA) */
+  --accent-hover: #BF151C;     /* slightly darker red on hover */
+  --accent-2: #0B84FF;         /* bright web-blue (links/focus) */
+  --border: rgba(228,27,35,0.12); /* subtle red-tinted border */
+  --focus: #0B84FF;            /* focus ring color */
 }
 
 /* --- rest of the stylesheet unchanged except for color usages --- */
@@ -23,6 +23,8 @@ body {
   line-height: 1.5;
   width: 100%;
   overflow-x: hidden; /* Prevent horizontal scrollbar */
+  /* subtle radial glow to hint at Spidey colors */
+  background-image: radial-gradient(circle at 10% 10%, rgba(228,27,35,0.04), transparent 10%), radial-gradient(circle at 90% 90%, rgba(11,132,255,0.02), transparent 20%);
 }
 
 /* Layout Containers */
@@ -161,7 +163,7 @@ section {
 
 .card-icon {
   width: 3rem; height: 3rem;
-  background-color: rgba(255,212,0,0.06);
+  background-color: rgba(228,27,35,0.06);
   border-radius: 0.5rem;
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 1.5rem; color: var(--accent);
@@ -186,7 +188,7 @@ section {
 .tech-chip:hover { border-color: var(--accent); color: var(--accent); }
 
 /* Footer */
-footer { width: 100%; text-align: center; padding: 3rem; background-color: #040404; color: var(--text-muted); font-size: 0.9rem; }
+footer { width: 100%; text-align: center; padding: 3rem; background-color: #06070a; color: var(--text-muted); font-size: 0.9rem; }
 
 /* Focus styles for accessibility */
 :focus {
