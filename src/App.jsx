@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   Database, Mail, Linkedin, Clock, Award, 
   GraduationCap, X, Copy, Check, Sparkles, 
-  Zap, TrendingUp, ArrowRight, Shield, Cpu, ChevronLeft, ChevronRight
+  Zap, TrendingUp, ArrowRight, Shield, Cpu
 } from 'lucide-react';
 
-const Portfolio = () => {
+const App = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [currentCert, setCurrentCert] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedModalCert, setSelectedModalCert] = useState(null);
   const [copied, setCopied] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -33,7 +34,7 @@ const Portfolio = () => {
     },
     {
       id: 3,
-      title: "Oracle Certified Associate",
+      title: "Oracle Associate DBA",
       issuer: "Oracle Certified Professional",
       code: "OCA 12c/19c",
       type: "Oracle Database",
@@ -78,14 +79,6 @@ const Portfolio = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  useEffect(() => {
-    if (isModalOpen) return;
-    const timer = setInterval(() => {
-      setCurrentCert((prev) => (prev + 1) % certifications.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [isModalOpen, certifications.length]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -146,7 +139,6 @@ const Portfolio = () => {
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Render expanding web ripple effects on user click
       for (let i = ripples.length - 1; i >= 0; i--) {
         const r = ripples[i];
         r.radius += 4;
@@ -177,7 +169,6 @@ const Portfolio = () => {
         ctx.restore();
       }
 
-      // Update particle matrix and web connecting lines
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
         p.x += p.vx;
@@ -237,16 +228,6 @@ const Portfolio = () => {
     };
   }, []);
 
-  const nextCert = (e) => {
-    e && e.stopPropagation();
-    setCurrentCert((prev) => (prev + 1) % certifications.length);
-  };
-
-  const prevCert = (e) => {
-    e && e.stopPropagation();
-    setCurrentCert((prev) => (prev - 1 + certifications.length) % certifications.length);
-  };
-
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
@@ -261,6 +242,11 @@ const Portfolio = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const openCertModal = (cert) => {
+    setSelectedModalCert(cert);
+    setIsModalOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden relative selection:bg-red-600 selection:text-white">
       {}
@@ -269,7 +255,7 @@ const Portfolio = () => {
 
         :root {
           --bg-dark: #07080C;
-          --bg-card: rgba(14, 17, 24, 0.85);
+          --bg-card: rgba(14, 17, 24, 0.9);
           --accent-red: #FF1E27;
           --accent-blue: #0088FF;
           --accent-cyan: #00F0FF;
@@ -285,11 +271,11 @@ const Portfolio = () => {
         .font-code { font-family: 'Space Mono', monospace; }
 
         .corner-web-tl {
-          position: fixed; top: 0; left: 0; width: 220px; height: 220px;
+          position: fixed; top: 0; left: 0; width: 200px; height: 200px;
           pointer-events: none; z-index: 2; opacity: 0.35;
         }
         .corner-web-tr {
-          position: fixed; top: 0; right: 0; width: 220px; height: 220px;
+          position: fixed; top: 0; right: 0; width: 200px; height: 200px;
           pointer-events: none; z-index: 2; opacity: 0.35; transform: scaleX(-1);
         }
 
@@ -303,7 +289,7 @@ const Portfolio = () => {
         }
         nav.scrolled {
           padding: 0.85rem 0;
-          box-shadow: 0 8px 30px rgba(255, 30, 39, 0.15);
+          box-shadow: 0 8px 30px rgba(255, 30, 39, 0.2);
           border-bottom-color: var(--accent-red);
         }
 
@@ -317,7 +303,7 @@ const Portfolio = () => {
           background: linear-gradient(90deg, var(--accent-red), var(--accent-cyan));
         }
 
-        section { position: relative; z-index: 10; padding: 5rem 1.5rem; max-width: 1200px; margin: 0 auto; }
+        section { position: relative; z-index: 10; padding: 6rem 1.5rem; max-width: 1200px; margin: 0 auto; }
         .section-title { font-size: 3rem; font-weight: 700; text-align: center; margin-bottom: 3.5rem; text-transform: uppercase; font-family: 'Teko', sans-serif; letter-spacing: 3px; color: #fff; text-shadow: 0 0 15px rgba(255, 30, 39, 0.4); }
 
         .card {
@@ -340,7 +326,7 @@ const Portfolio = () => {
           box-shadow: 0 10px 30px rgba(0, 240, 255, 0.15);
         }
 
-        .timeline-item { border-left: 2px solid var(--accent-red); padding-left: 2rem; position: relative; margin-bottom: 2.5rem; }
+        .timeline-item { border-left: 2px solid var(--accent-red); padding-left: 2rem; position: relative; margin-bottom: 3rem; }
         .timeline-dot {
           width: 14px; height: 14px; background: var(--accent-cyan);
           border-radius: 50%; position: absolute; left: -8px; top: 0;
@@ -361,33 +347,24 @@ const Portfolio = () => {
         .btn-secondary { background: rgba(14, 17, 24, 0.9); border: 1px solid var(--accent-cyan); color: #fff; box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2); }
         .btn-secondary:hover { background: rgba(0, 240, 255, 0.15); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0, 240, 255, 0.3); }
 
-        .cert-card {
-          background: linear-gradient(135deg, rgba(14, 17, 24, 0.95), rgba(22, 27, 38, 0.95));
-          border: 1px solid var(--accent-cyan);
-          border-radius: 16px; padding: 2rem;
-          text-align: center; position: relative;
-          box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8);
-        }
-
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 2rem; }
         .modal-content { background: #0E1118; border: 2px solid var(--accent-red); border-radius: 16px; padding: 2.5rem; max-width: 500px; width: 100%; position: relative; box-shadow: 0 0 40px rgba(255, 30, 39, 0.4); }
 
         @media (max-width: 768px) {
           .nav-links { display: none; }
-          .corner-web-tl, .corner-web-tr { width: 130px; height: 130px; }
+          .corner-web-tl, .corner-web-tr { width: 120px; height: 120px; }
         }
       `}</style>
 
-      {/* Background Interactive Canvas */}
+      {}
       <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0" />
 
-      {/* Spider Web Corner SVGs */}
       <svg className="corner-web-tl" viewBox="0 0 100 100" fill="none" stroke="#FF1E27" strokeWidth="0.75">
         <path d="M0,0 L100,100 M0,0 L100,50 M0,0 L50,100 M0,0 L100,25 M0,0 L25,100" />
         <path d="M20,0 C20,10 10,20 0,20 M40,0 C40,20 20,40 0,40 M60,0 C60,30 30,60 0,60 M80,0 C80,40 40,80 0,80 M100,0 C100,50 50,100 0,100" />
       </svg>
       <svg className="corner-web-tr" viewBox="0 0 100 100" fill="none" stroke="#00F0FF" strokeWidth="0.75">
-        <path d="M0,0 L100,100 M0,0 L100,50 M0,0 L50,100 M0,0 L25,100" />
+        <path d="M0,0 L100,100 M0,0 L100,50 M0,0 L50,100 M0,0 L100,25 M0,0 L25,100" />
         <path d="M20,0 C20,10 10,20 0,20 M40,0 C40,20 20,40 0,40 M60,0 C60,30 30,60 0,60 M80,0 C80,40 40,80 0,80 M100,0 C100,50 50,100 0,100" />
       </svg>
 
@@ -424,7 +401,7 @@ const Portfolio = () => {
           </h2>
 
           <p className="text-slate-300 text-lg leading-relaxed max-w-2xl mx-auto font-sans">
-            Enterprise-grade database solutions. 4+ years slinging enterprise database solutions across SQL Server, Oracle, and Cloud domains. Specialized in Automation, Administration, and Performance.
+            Weaving indestructible database nets across high-stakes digital environments. 4+ years slinging enterprise database solutions across SQL Server, Oracle, and Cloud domains. Specialized in Automation, Administration, and Performance.
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center pt-4">
@@ -434,28 +411,6 @@ const Portfolio = () => {
             <button onClick={() => scrollToSection('connect')} className="btn btn-secondary">
               <Mail size={18} /> Signal Flare
             </button>
-          </div>
-
-          {/* Interactive Certification Carousel Badge */}
-          <div className="mt-12 w-full max-w-md mx-auto">
-            <div className="cert-card">
-              <div className="flex items-center justify-between gap-4 mb-4">
-                <button onClick={prevCert} className="text-cyan-400 hover:text-red-500 font-bold text-2xl px-3 py-1">‹</button>
-                <div onClick={() => setIsModalOpen(true)} className="cursor-pointer space-y-2">
-                  <div className="w-16 h-16 mx-auto rounded-full bg-red-600/20 border-2 border-red-500 flex items-center justify-center text-cyan-400">
-                    <Award size={32} />
-                  </div>
-                  <h3 className="font-bold text-lg text-white">{certifications[currentCert].title}</h3>
-                  <p className="text-xs font-code text-cyan-400">{certifications[currentCert].issuer} • {certifications[currentCert].code}</p>
-                </div>
-                <button onClick={nextCert} className="text-cyan-400 hover:text-red-500 font-bold text-2xl px-3 py-1">›</button>
-              </div>
-              <div className="flex justify-center gap-2">
-                {certifications.map((_, idx) => (
-                  <button key={idx} onClick={() => setCurrentCert(idx)} className={`w-2.5 h-2.5 rounded-full transition-all ${idx === currentCert ? 'bg-cyan-400 w-6' : 'bg-slate-700'}`} />
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -521,9 +476,8 @@ const Portfolio = () => {
             <div className="text-sm font-semibold text-red-400 mb-3">Athens Exchange Group (ATHEX)</div>
             <ul className="space-y-2 text-sm text-slate-300">
               <li>• Managing Google Cloud SQL & enterprise high-performance database infrastructure.</li>
-              <li>• Oracle, SQL Server, and PostgreSQL automated installation and patch management.</li>
-              <li>• Executing complex database migrations across cloud platforms with minimal downtime.</li>
-              <li>• Performance monitoring and proactive query optimization.</li>
+              <li>• Oracle, SQL Server, and PostgreSQL automated patch management.</li>
+              <li>• Executing complex database migrations with minimal downtime.</li>
             </ul>
           </div>
 
@@ -535,9 +489,8 @@ const Portfolio = () => {
             </div>
             <div className="text-sm font-semibold text-red-400 mb-3">Hellenic Military Units Administration</div>
             <ul className="space-y-2 text-sm text-slate-300">
-              <li>• Specialized technical support and defense for encrypted high-security applications.</li>
-              <li>• Secure application development & automation scripting with Python and SQL.</li>
-              <li>• Large-scale enterprise file system management and data governance.</li>
+              <li>• Specialized technical defense for encrypted high-security applications.</li>
+              <li>• Secure data scripting with Python and SQL.</li>
             </ul>
           </div>
 
@@ -550,8 +503,7 @@ const Portfolio = () => {
             <div className="text-sm font-semibold text-red-400 mb-3">Ernst & Young</div>
             <ul className="space-y-2 text-sm text-slate-300">
               <li>• Built automated ETL pipelines utilizing Python, SQL, and SSIS.</li>
-              <li>• Credit risk data transformation, analytics, and validation.</li>
-              <li>• CDM model configuration and query pipeline optimization.</li>
+              <li>• Risk transformation and financial data processing.</li>
             </ul>
           </div>
 
@@ -563,112 +515,90 @@ const Portfolio = () => {
             </div>
             <div className="text-sm font-semibold text-red-400 mb-3">Netcompany - Instasoft</div>
             <ul className="space-y-2 text-sm text-slate-300">
-              <li>• Enterprise database administration, health monitoring, and maintenance.</li>
-              <li>• Query optimization, index tuning, and wait stats analysis.</li>
-              <li>• Table partitioning, data compression, and archiving strategies.</li>
-              <li>• High Availability (HADR), backup automation, and disaster recovery procedures.</li>
+              <li>• Database administration, maintenance, and query optimization.</li>
+              <li>• Index tuning, table partitioning, and archiving strategies.</li>
+              <li>• Automated backup and disaster recovery procedures.</li>
             </ul>
           </div>
         </div>
       </section>
 
       {}
-      <section id="education" className="bg-slate-950/80 rounded-2xl border border-red-900/30 p-8 md:p-10 my-12 shadow-2xl">
+      <section id="education" className="bg-slate-950/80 rounded-2xl border border-red-900/30 p-8 my-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          
-          {/* Column 1: Education */}
+          {/* Education Column */}
           <div>
-            <h3 className="text-xl font-bold text-cyan-400 mb-6 flex items-center gap-2 font-hero tracking-wider">
-              <GraduationCap size={22} className="text-cyan-400" /> Education
+            <h3 className="text-xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
+              <GraduationCap size={22} /> Education
             </h3>
             <div className="space-y-6">
               <div>
                 <h4 className="font-bold text-white text-base">Master of Data Analytics</h4>
-                <div className="text-xs font-code text-cyan-400 font-bold my-1">2023 - 2025</div>
+                <div className="text-xs font-code text-cyan-400 mt-1">2023 - 2025</div>
                 <div className="text-xs text-slate-400">University of Bolton</div>
-                <div className="text-xs text-yellow-400 font-bold mt-1">Grade: First-Class Honours (1:1)</div>
+                <div className="text-xs text-yellow-400 font-bold mt-1">Grade: First-Class Honors (1:1)</div>
               </div>
               <div>
                 <h4 className="font-bold text-white text-base">Bachelor of Data Analytics</h4>
-                <div className="text-xs font-code text-cyan-400 font-bold my-1">2020 - 2023</div>
+                <div className="text-xs font-code text-cyan-400 mt-1">2020 - 2023</div>
                 <div className="text-xs text-slate-400">University of Bolton</div>
-                <div className="text-xs text-yellow-400 font-bold mt-1">Grade: First-Class Honours (1:1)</div>
+                <div className="text-xs text-yellow-400 font-bold mt-1">Grade: First-Class Honors (1:1)</div>
               </div>
             </div>
           </div>
 
-          {/* Column 2: Spidey Badges / Certifications */}
+          {/* Spidey Badges Column */}
           <div>
-            <h3 className="text-xl font-bold text-red-500 mb-6 flex items-center gap-2 font-hero tracking-wider">
-              <Award size={22} className="text-red-500" /> Spidey Badges
+            <h3 className="text-xl font-bold text-red-500 mb-6 flex items-center gap-2">
+              <Award size={22} /> Spidey Badges
             </h3>
-            <div className="space-y-5">
-              <div className="flex items-start gap-3">
-                <Award size={20} className="text-red-500 shrink-0 mt-0.5" />
-                <div>
-                  <div className="font-bold text-white text-sm">Azure Database Administrator</div>
-                  <div className="text-xs text-slate-400">Microsoft Certified Associate (DP-300)</div>
+            <div className="space-y-4">
+              {certifications.map((cert) => (
+                <div 
+                  key={cert.id} 
+                  onClick={() => openCertModal(cert)}
+                  className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-slate-900/80 transition-all cursor-pointer border border-transparent hover:border-red-500/40"
+                >
+                  <Award size={20} className="text-red-500 shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-bold text-white text-sm hover:text-cyan-400 transition-colors">{cert.title}</div>
+                    <div className="text-xs text-slate-400">{cert.issuer}</div>
+                  </div>
                 </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <Award size={20} className="text-blue-500 shrink-0 mt-0.5" />
-                <div>
-                  <div className="font-bold text-white text-sm">Azure Data Fundamentals</div>
-                  <div className="text-xs text-slate-400">Microsoft Certified (DP-900)</div>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <Award size={20} className="text-amber-500 shrink-0 mt-0.5" />
-                <div>
-                  <div className="font-bold text-white text-sm">Oracle Associate DBA</div>
-                  <div className="text-xs text-slate-400">Oracle Certified Associate (OCA 12c/19c)</div>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <Award size={20} className="text-cyan-400 shrink-0 mt-0.5" />
-                <div>
-                  <div className="font-bold text-white text-sm">Oracle Autonomous DB Specialist</div>
-                  <div className="text-xs text-slate-400">Oracle Certified Specialist</div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
-          {/* Column 3: Honors & Awards */}
+          {/* Honors & Awards Column */}
           <div>
-            <h3 className="text-xl font-bold text-yellow-400 mb-6 flex items-center gap-2 font-hero tracking-wider">
-              <Zap size={22} className="text-yellow-400" /> Honors & Awards
+            <h3 className="text-xl font-bold text-yellow-400 mb-6 flex items-center gap-2">
+              <Zap size={22} /> Honors & Awards
             </h3>
             <div className="space-y-6">
               <div className="flex items-start gap-3">
                 <Zap size={20} className="text-yellow-400 shrink-0 mt-0.5" />
                 <div>
                   <div className="font-bold text-white text-sm">Distinguished IT Student Award</div>
-                  <div className="text-xs text-slate-400 mt-1">2025 & 2023 - British Computer Society (BCS)</div>
+                  <div className="text-xs text-slate-400">2025 & 2023 - British Computer Society (BCS)</div>
                 </div>
               </div>
-
               <div className="flex items-start gap-3">
                 <Zap size={20} className="text-cyan-400 shrink-0 mt-0.5" />
                 <div>
                   <div className="font-bold text-white text-sm">Ministry of Digital Governance</div>
-                  <div className="text-xs text-slate-400 mt-1">Special Recognition Award Recipient</div>
+                  <div className="text-xs text-slate-400">Special Recognition Award Recipient</div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </section>
 
       {}
       <section className="text-center">
         <h3 className="text-xs font-code text-cyan-400 uppercase tracking-widest mb-8">Arachnid Tech Arsenal</h3>
-        <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
-          {['SQL Server 2016-2025', 'Oracle 12c-26ai', 'PostgreSQL', 'MySQL', 'MariaDB', 'Azure SQL Database', 'Google Cloud SQL', 'Ansible', 'Terraform', 'PowerShell', 'Python', 'SSIS', 'Grafana', 'SolarWinds', 'OEM 13c'].map(tech => (
+        <div className="flex flex-wrap justify-center gap-3">
+          {['SQL Server 2016-2025', 'Oracle 12c-26ai', 'PostgreSQL', 'MySQL', 'Azure SQL', 'Google Cloud SQL', 'Ansible', 'Terraform', 'PowerShell', 'Python', 'Grafana', 'SSIS'].map(tech => (
             <span key={tech} className="tech-chip">{tech}</span>
           ))}
         </div>
@@ -678,7 +608,7 @@ const Portfolio = () => {
       <footer id="connect" className="relative z-10 mt-20 py-16 bg-slate-950 border-t border-red-900/40 text-center">
         <div className="max-w-2xl mx-auto px-6 space-y-6">
           <h2 className="text-3xl font-hero font-bold text-white tracking-wider">SHOOT A WEB SIGNAL</h2>
-          <p className="text-slate-400 text-sm">Ready to reinforce your database infrastructure? Connect for enterprise database architecture, automation, and performance tuning.</p>
+          <p className="text-slate-400 text-sm">Ready to reinforce your database infrastructure? Connect for enterprise database architecture and performance tuning.</p>
 
           <div className="flex flex-wrap gap-4 justify-center">
             <a href="mailto:vasilhsgxr5000@gmail.com" className="btn btn-primary">
@@ -698,7 +628,7 @@ const Portfolio = () => {
       </footer>
 
       {}
-      {isModalOpen && (
+      {isModalOpen && selectedModalCert && (
         <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <button onClick={() => setIsModalOpen(false)} className="absolute top-4 right-4 text-slate-400 hover:text-white">
@@ -706,8 +636,8 @@ const Portfolio = () => {
             </button>
             <div className="text-center space-y-4">
               <Award size={48} className="mx-auto text-cyan-400 animate-pulse" />
-              <h3 className="text-xl font-bold text-white">{certifications[currentCert].title}</h3>
-              <p className="text-sm font-code text-red-400">{certifications[currentCert].issuer} • {certifications[currentCert].code}</p>
+              <h3 className="text-xl font-bold text-white">{selectedModalCert.title}</h3>
+              <p className="text-sm font-code text-red-400">{selectedModalCert.issuer} • {selectedModalCert.code}</p>
               <div className="p-3 bg-slate-900 rounded-lg text-xs text-slate-300 border border-slate-800">
                 Verified Enterprise Certification for Advanced Database Architecture & Cloud Operations.
               </div>
@@ -719,4 +649,4 @@ const Portfolio = () => {
   );
 };
 
-export default Portfolio;
+export default App;
