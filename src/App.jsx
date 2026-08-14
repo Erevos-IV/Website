@@ -734,7 +734,7 @@ export default function App() {
           <h1>VASSILEIOS GOUSETIS</h1>
           <h2>Your Friendly Neighborhood Database Architect</h2>
           <p>
-            Weaving enterprise-grade database networks with 4+ years architecting high-performance, resilient database infrastructure across SQL Server, Oracle, and Cloud platforms. Specialized in HADR, query tuning, and cloud migrations.
+            Weaving enterprise-grade database networks with 4+ years architecting high-performance, resilient database infrastructure across SQL Server, Oracle, and Cloud platforms. Specialized in query tuning, automation, and migrations.
           </p>
 
           <div className="btn-group">
